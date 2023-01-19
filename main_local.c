@@ -11,8 +11,14 @@ int main(int argc, char **argv)
     }
 
     char * csv_file_path = argv[1];
+    FILE * f = fopen(csv_file_path, "r");
 
-    printf("filename is  %s \n", csv_file_path);
+    if (!f)
+    {
+        printf("error with reading <%s> file\n", csv_file_path);
+    }
+
+
     
     return 0;
 }
