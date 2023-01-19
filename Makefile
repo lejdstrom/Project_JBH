@@ -11,4 +11,4 @@ test_memory:
 	valgrind ./main data.csv --track-origin=yes -leak--check=full
 
 clean:
-	rm -f *.o main
+	@rm -f *.o main
