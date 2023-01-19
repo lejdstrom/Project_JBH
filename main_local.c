@@ -26,8 +26,6 @@ int main(int argc, char **argv)
     vector_init(&v);
 
 
-
-
     if (!f)
     {
         printf("error with reading <%s> file\n", csv_file_path);
@@ -61,7 +59,8 @@ int main(int argc, char **argv)
             // if true then update customer.debt
             // add to db
             records++;
-            vector_add_by_value(&v, tmp);
+            //vector_add_by_value(&v, tmp);
+            vector_add(&v, &tmp);
         }
         else
         {
@@ -74,6 +73,7 @@ int main(int argc, char **argv)
 
     vector_print(&v);
     
+    vector_free(&v);
 
 
 
