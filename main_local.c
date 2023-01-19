@@ -50,6 +50,8 @@ int main(int argc, char **argv)
         if(read == 8)
         {
             records++;
+            // check if tmp.id already in db
+            // if true then update customer.debt
             // add to db
         }
         else
