@@ -37,7 +37,7 @@ int main(int argc, char **argv)
         Customer tmp = {};
 
         // we except 8 fields
-        read = sscanf(buffer, "%49[^,],%49[^,],%9[^,],%10[^,],%u/%u/%u,%10[^\n]",
+        read = sscanf(buffer, "%49[^,],%49[^,],%9[0-9],%10[0-9],%u/%u/%u,%10[^\n]",
         tmp.first_name,
         tmp.second_name,
         tmp.id,
@@ -51,10 +51,12 @@ int main(int argc, char **argv)
         if(read == 8)
         {
             records++;
+            // add to db
         }
         else
         {
             printf("line %d is bad formated in file: %s\n", line_number, csv_file_path);
+            // add to error struct
         }
     }
 
