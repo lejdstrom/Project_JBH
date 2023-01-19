@@ -20,7 +20,7 @@ typedef struct
 } Customer;
 
 
-
+void print_customer(Customer *c);
 
 
 #endif

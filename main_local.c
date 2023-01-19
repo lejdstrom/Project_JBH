@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "customer.h"
+#include "vector_customer.h"
 
 #define BUFFER_SIZE 256
 
@@ -19,6 +20,13 @@ int main(int argc, char **argv)
     int line_number = 1;
     int read = 0;
     int records = 0;
+    
+    // test vector customer
+    Vector_customer v;
+    vector_init(&v);
+
+
+
 
     if (!f)
     {
@@ -49,10 +57,11 @@ int main(int argc, char **argv)
 
         if(read == 8)
         {
-            records++;
             // check if tmp.id already in db
             // if true then update customer.debt
             // add to db
+            records++;
+            vector_add_by_value(&v, tmp);
         }
         else
         {
@@ -62,6 +71,8 @@ int main(int argc, char **argv)
     }
 
     printf("we succesfull read %d records in file %s\n", records, csv_file_path);
+
+    vector_print(&v);
     
 
 

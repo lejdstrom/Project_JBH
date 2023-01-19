@@ -18,6 +18,9 @@ typedef struct
 void vector_init(Vector_customer *v);
 void vector_resize(Vector_customer *v, unsigned new_size);
 void vector_add(Vector_customer *v, Customer * c);
+void vector_add_by_value(Vector_customer *v, Customer c);
+
+void vector_print(Vector_customer *v);
 int index_of_id(Vector_customer *v, char * id);
 
 

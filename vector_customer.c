@@ -46,6 +46,34 @@ void vector_resize(Vector_customer *v, unsigned new_capacity)
     */
 
 }
+
+void vector_add_by_value(Vector_customer *v, Customer c)
+{
+    int index = index_of_id(v, c.id);
+
+    if (index >= 0) // found in our data base
+    {
+        // update 
+        int a = atoi(v->data[index].debt);
+        int b = atoi(c.debt);
+
+        int result = a+b;
+
+        snprintf(v->data[index].debt, ID_LEN, "%d", result);
+    }
+    else
+    {
+        
+        if (v->capacity == v->total)
+        {
+            vector_resize(v, v->capacity * 2);
+        }
+
+        v->data[v->total++] = c;
+    }
+}
+
+
 void vector_add(Vector_customer *v, Customer * c)
 {
     int index = index_of_id(v, c->id);
@@ -126,4 +154,13 @@ int index_of_id(Vector_customer *v, char * id)
     }
 
     return -1;
+}
+
+void vector_print(Vector_customer *v)
+{
+    for (int i = 0; i < v->total; i++)
+    {
+        print_customer(&v->data[i]);
+    }
+    puts("");
 }
