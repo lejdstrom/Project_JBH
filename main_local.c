@@ -20,7 +20,6 @@ int main(int argc, char **argv)
     int read = 0;
     int records = 0;
 
-
     if (!f)
     {
         printf("error with reading <%s> file\n", csv_file_path);
