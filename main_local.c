@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "customer.h"
+
 int main(int argc, char **argv)
 {
     if (argc < 2)
@@ -17,6 +19,9 @@ int main(int argc, char **argv)
     {
         printf("error with reading <%s> file\n", csv_file_path);
     }
+
+
+
 
 
     
