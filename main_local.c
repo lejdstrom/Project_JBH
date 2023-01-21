@@ -21,7 +21,7 @@ int main(int argc, char **argv)
         printf("error with creating data base from file %s\n", argv[1]);
     }
 
-    vector_print(data_base);
+    print_db(data_base);
     free_db(data_base);
 
     return 0;
