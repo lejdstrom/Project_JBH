@@ -18,33 +18,12 @@ void vector_resize(Vector_customer *v, unsigned new_capacity)
     {
         Customer *tmp = realloc(v->data, sizeof(Customer) * new_capacity);
         
-        /*
-        Customer tmp = {};
-
-        for (int i = v->size; i < new_size; i++)
-        {
-            v->data[i] = tmp;
-        }
-        */
        if(tmp)
        {
             v->capacity = new_capacity;
             v->data = tmp;
        }
     }
-    /*
-    *   downsizing logic
-    *   not needed now
-    *
-
-    else 
-    {
-
-
-    }
-
-    */
-
 }
 
 void vector_add_by_value(Vector_customer *vector, Customer customer)
@@ -99,45 +78,6 @@ void vector_add(Vector_customer *v, Customer * c)
         v->data[v->total++] = *c;
         
     }
-    
-    /*
-    if(!v->data)
-    {
-        v->data = malloc(sizeof(Customer));
-        v->data[0] = *c;
-        v->size = 1;
-    }
-    else
-    {
-        int index = index_of_id(v, c->id);
-
-        if (index >= 0) // found in our data base
-        {
-            // update 
-            // v->data[index].debt
-        }
-        else
-        // not in our db
-        // lets look for an empty slot
-        {
-            // look for an empty slot
-            // the empty strings means an empty slot
-            index = index_of_id(v, "");
-            if (index >= 0) // found in our data base
-            {
-                v->data[index] = *c;
-            }
-            else
-            {
-
-            }
-
-
-        }
-        
-        
-    }
-    */
 }
 
 // return index of the customer vector if found
