@@ -69,11 +69,15 @@ int main(int argc, char **argv)
         }
     }
 
+    fclose(f);
+
     printf("we succesfull read %d records in file %s\n", records, csv_file_path);
 
     vector_print(&v);
     
     vector_free(&v);
+
+
 
 
 
