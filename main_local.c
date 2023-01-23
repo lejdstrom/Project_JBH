@@ -4,6 +4,7 @@
 
 #include "data_base.h"
 
+#define PROMPT printf("-> ");
 
 int main(int argc, char **argv)
 {
@@ -20,6 +21,18 @@ int main(int argc, char **argv)
     {
         printf("error with creating data base from file %s\n", argv[1]);
     }
+
+    char buffer[BUFFER_SIZE]={};
+
+    PROMPT
+    fgets(buffer, BUFFER_SIZE-1, stdin);
+
+    while (strncmp(buffer, "quit", 4))
+    {
+        PROMPT
+        fgets(buffer, BUFFER_SIZE-1, stdin);
+    }
+    
 
     print_db(data_base);
     free_db(data_base);
