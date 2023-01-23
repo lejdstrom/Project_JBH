@@ -48,7 +48,7 @@ int main(int argc, char **argv)
     char *operators[] = {"=", "!=", ">", "<"};
 
     int i = 0;
-    int index = 0;
+    int flag = 0;
 
     char * part;
 
@@ -61,6 +61,7 @@ int main(int argc, char **argv)
         fgets(buffer, BUFFER_SIZE-1, stdin);
         //strcpy(copy_buffer, buffer);
         to_lower_str(buffer);
+
 
         for(int j=0; j<4; j++)
         {
