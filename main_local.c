@@ -12,6 +12,10 @@ typedef enum{
 
 } Options;
 
+typedef enum
+{
+    EQUAL, NOT_EQUAL, GREATER, SMALLER
+}Operators;
 
 
 int main(int argc, char **argv)
@@ -40,6 +44,9 @@ int main(int argc, char **argv)
     char *bool_options[4] = {NULL}; 
     char *options[] = {"quit", "print", "select", "set"};
 
+    char *bool_operators[4] = {NULL};
+    char *operators[] = {"=", "!=", ">", "<"};
+
     int i = 0;
     int index = 0;
 
@@ -52,12 +59,12 @@ int main(int argc, char **argv)
     {
         PROMPT
         fgets(buffer, BUFFER_SIZE-1, stdin);
-        strcpy(copy_buffer, buffer);
-        to_lower_str(copy_buffer);
+        //strcpy(copy_buffer, buffer);
+        to_lower_str(buffer);
 
         for(int j=0; j<4; j++)
         {
-            bool_options[j] = strstr(copy_buffer, options[j]);
+            bool_options[j] = strstr(buffer, options[j]);
         }
 
         if(bool_options[QUIT])
@@ -71,11 +78,51 @@ int main(int argc, char **argv)
         else if(bool_options[SELECT])
         {
             puts("select !");
+            for(int j=0; j<4; j++)
+            {
+                bool_operators[j] = strstr(buffer, operators[j]);
+            }
+
+            if(bool_operators[EQUAL])
+            {
+                puts("equal !");
+
+            }
+            else if(bool_operators[NOT_EQUAL])
+            {
+                puts("not equal !");
+            }
+            else if(bool_operators[GREATER])
+            {
+            
+                puts("greater !");   
+            }
+            else if(bool_operators[SMALLER])
+            {
+                
+                puts("smaller !");
+            }
+            else
+            {
+                puts("error ! after select you need to input one of the 4 operators: >, =, <, !=");
+            }
+
+
+
         }
         else if(bool_options[SET])
         {
             puts("set !");
         }
+        else
+        {
+            puts("error you must choose between one of the 4 options: print, select, set, quit");
+            memset(buffer, 0, BUFFER_SIZE);
+            memset(bool_operators, 0, 4);
+            memset(bool_options, 0, 4);
+        }
+
+
 
     }
     
