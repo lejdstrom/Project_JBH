@@ -27,6 +27,9 @@ int main(int argc, char **argv)
     print_db(data_base);
 
     char buffer[BUFFER_SIZE]={};
+    char copy_buffer[BUFFER_SIZE] = {};
+    char pre_parsed_buff[BUFFER_SIZE]={};
+    char delimiters[] = {" "};
 
     //PROMPT
     //fgets(buffer, BUFFER_SIZE-1, stdin);
@@ -35,8 +38,9 @@ int main(int argc, char **argv)
     {
         PROMPT
         fgets(buffer, BUFFER_SIZE-1, stdin);
-        to_lower_str(buffer);
-        printf("your input: %s\n", buffer);
+        strcpy(copy_buffer, buffer);
+        to_lower_str(copy_buffer);
+        printf("your input: %s\n", copy_buffer);
     }
     
 
