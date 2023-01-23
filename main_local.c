@@ -6,6 +6,12 @@
 
 #define PROMPT printf("-> ");
 
+typedef enum{
+
+    QUIT, PRINT, SELECT, SET
+
+} Options;
+
 
 
 int main(int argc, char **argv)
@@ -31,6 +37,14 @@ int main(int argc, char **argv)
     char pre_parsed_buff[BUFFER_SIZE]={};
     char delimiters[] = {" "};
 
+    char *bool_options[4] = {NULL}; 
+    char *options[] = {"quit", "print", "select", "set"};
+
+    int i = 0;
+    int index = 0;
+
+    char * part;
+
     //PROMPT
     //fgets(buffer, BUFFER_SIZE-1, stdin);
 
@@ -40,7 +54,29 @@ int main(int argc, char **argv)
         fgets(buffer, BUFFER_SIZE-1, stdin);
         strcpy(copy_buffer, buffer);
         to_lower_str(copy_buffer);
-        printf("your input: %s\n", copy_buffer);
+
+        for(int j=0; j<4; j++)
+        {
+            bool_options[j] = strstr(copy_buffer, options[j]);
+        }
+
+        if(bool_options[QUIT])
+        {
+            puts("quit !");
+        }
+        else if(bool_options[PRINT])
+        {
+            puts("print !");
+        }
+        else if(bool_options[SELECT])
+        {
+            puts("select !");
+        }
+        else if(bool_options[SET])
+        {
+            puts("set !");
+        }
+
     }
     
 

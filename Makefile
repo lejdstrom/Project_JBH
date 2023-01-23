@@ -16,5 +16,8 @@ data_base.o: data_base.h data_base.c util.h util.c
 test_memory:
 	valgrind ./main data.csv --track-origin=yes -leak--check=full
 
+debug:
+	gdb --args ./main data.csv
+
 clean:
 	@rm -f *.o main
