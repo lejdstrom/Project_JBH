@@ -50,3 +50,28 @@ void to_lower_str(char *str)
 {
     for ( ; *str; ++str) *str = tolower(*str);
 }
+
+MenuChoice parse_first(char *arr)
+{
+    if(!strncmp(arr, "print", 5))
+    {
+        return PRINT;
+    }
+    else if(!strncmp(arr, "select", 6))
+    {
+        return SELECT;
+    }
+    
+    else if(!strncmp(arr, "set", 3))
+    {
+        return SET;
+    }
+    else if(!strncmp(arr, "quit", 4))
+    {
+        return QUIT;
+    }
+    else
+    {
+        return UNKNOW;
+    }
+}

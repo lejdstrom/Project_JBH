@@ -1,6 +1,9 @@
 main: customer.o vector_customer.o main_local.o data_base.o
 	gcc -Wall -g customer.o vector_customer.o main_local.o data_base.o util.o -o main
 
+main_local.o: main_local.c
+	gcc -Wall -c -g main_local.c
+
 customer.o: customer.c customer.h
 	gcc -Wall -c -g customer.c
 

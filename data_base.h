@@ -12,6 +12,11 @@ void free_db(Vector_customer *v);
 void print_db(Vector_customer *v);
 int cmp_debt(void* c1, void *c2);
 
+/*
+void srch_first_name(Vector_customer *data_base, Vector_customer *out, Operators op, char *arg);
+void srch_second_name(Vector_customer *data_base, Vector_customer *out, Operators op, char *arg);
+void srch_id();
+*/
 
 
 

@@ -12,4 +12,18 @@ void swap(void* v1, void* v2, int size);
 
 void to_lower_str(char *str);
 
+typedef enum
+{
+    PRINT, SELECT, QUIT, SET, UNKNOW
+}MenuChoice;
+
+typedef enum
+{
+    EQUAL, NOT_EQUAL, GREATER, SMALLER
+}Operators;
+
+MenuChoice parse_first(char * arr);
+
+
+
 #endif

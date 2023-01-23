@@ -3,19 +3,9 @@
 #include <string.h>
 
 #include "data_base.h"
+#include "util.h"
 
 #define PROMPT printf("-> ");
-
-typedef enum{
-
-    QUIT, PRINT, SELECT, SET
-
-} Options;
-
-typedef enum
-{
-    EQUAL, NOT_EQUAL, GREATER, SMALLER
-}Operators;
 
 
 int main(int argc, char **argv)
@@ -39,7 +29,7 @@ int main(int argc, char **argv)
     char buffer[BUFFER_SIZE]={};
     char copy_buffer[BUFFER_SIZE] = {};
     char pre_parsed_buff[BUFFER_SIZE]={};
-    char delimiters[] = {" "};
+    char delimiters[] = {" ,\n"};
 
     char *bool_options[4] = {NULL}; 
     char *options[] = {"quit", "print", "select", "set"};
@@ -48,13 +38,50 @@ int main(int argc, char **argv)
     char *operators[] = {"=", "!=", ">", "<"};
 
     int i = 0;
-    int flag = 0;
+    int flag = 1;
 
     char * part;
+
+    while (flag)
+    {
+        PROMPT
+        fgets(buffer, BUFFER_SIZE-1, stdin);
+        to_lower_str(buffer);
+        part = strtok(buffer, delimiters);
+
+        switch (parse_first(part))
+        {
+        case PRINT:
+            print_db(data_base);
+            break;
+        
+        case SELECT:
+            // parse the rest of the string
+            break;
+        
+        case SET:
+            // parse and check the res of the string
+            break;
+
+        case QUIT:
+            flag = 0;
+            break;
+
+        case UNKNOW:
+            puts("error you must choose between one of the 4 options: print, select, set, quit");
+            break;
+        }
+        
+    }
+    
+
+
+
 
     //PROMPT
     //fgets(buffer, BUFFER_SIZE-1, stdin);
 
+    /*
     while (strncmp(buffer, "quit", 4))
     {
         PROMPT
@@ -127,6 +154,7 @@ int main(int argc, char **argv)
 
     }
     
+    */
 
     free_db(data_base);
 
