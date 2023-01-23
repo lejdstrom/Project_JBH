@@ -6,6 +6,8 @@
 
 #define PROMPT printf("-> ");
 
+
+
 int main(int argc, char **argv)
 {
     if (argc < 2)
@@ -22,19 +24,22 @@ int main(int argc, char **argv)
         printf("error with creating data base from file %s\n", argv[1]);
     }
 
+    print_db(data_base);
+
     char buffer[BUFFER_SIZE]={};
 
-    PROMPT
-    fgets(buffer, BUFFER_SIZE-1, stdin);
+    //PROMPT
+    //fgets(buffer, BUFFER_SIZE-1, stdin);
 
     while (strncmp(buffer, "quit", 4))
     {
         PROMPT
         fgets(buffer, BUFFER_SIZE-1, stdin);
+        to_lower_str(buffer);
+        printf("your input: %s\n", buffer);
     }
     
 
-    print_db(data_base);
     free_db(data_base);
 
     return 0;

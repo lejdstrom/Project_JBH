@@ -45,3 +45,8 @@ void swap(void *v1, void *v2, int size)
     memcpy(v1, v2, size);
     memcpy(v2, buffer, size);
 }
+
+void to_lower_str(char *str)
+{
+    for ( ; *str; ++str) *str = tolower(*str);
+}
