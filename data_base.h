@@ -1,8 +1,8 @@
 #ifndef DATA_BASE_H
 #define DATA_BASE_H
 
-#include "vector_customer.h"
 #include "util.h"
+#include "vector_customer.h"
 
 #define BUFFER_SIZE 256
 

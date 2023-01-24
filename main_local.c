@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+//#include "util.h"
 #include "data_base.h"
-#include "util.h"
 
 #define PROMPT printf("-> ");
 
@@ -42,21 +42,30 @@ int main(int argc, char **argv)
 
     char * part;
 
+    Select_request request;
+
     while (flag)
     {
         PROMPT
         fgets(buffer, BUFFER_SIZE-1, stdin);
-        to_lower_str(buffer);
-        part = strtok(buffer, delimiters);
+        strcpy(copy_buffer, buffer);
+
+        //buffer[strspn(buffer, "\n")] = 0;
+        to_lower_str(copy_buffer);
+
+        part = strtok(copy_buffer, delimiters);
 
         switch (parse_first(part))
         {
         case PRINT:
             print_db(data_base);
+            // goto free buffer
             break;
         
         case SELECT:
             // parse the rest of the string
+            parse_select(part, &request);
+
             break;
         
         case SET:
