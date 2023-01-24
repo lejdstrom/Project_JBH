@@ -42,7 +42,8 @@ int main(int argc, char **argv)
         fgets(buffer, BUFFER_SIZE-1, stdin);
         strcpy(copy_buffer, buffer);
 
-        //buffer[strspn(buffer, "\n")] = 0;
+        buffer[strspn(buffer, "\n")] = 0;
+        
         to_lower_str(copy_buffer);
 
         part = strtok(copy_buffer, delimiters);

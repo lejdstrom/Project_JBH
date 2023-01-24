@@ -148,6 +148,8 @@ void parse_select(char *arr, Select_request *request)
                 return;
             }
 
+            part4[strlen(part4)-1] = 0;
+
             strcpy(request->arg, part4);
         }
     }
@@ -174,6 +176,7 @@ void parse_select(char *arr, Select_request *request)
                 return;
             }
 
+            part4[strlen(part4)-1] = 0;
             strcpy(request->arg, part4);
         }
     }
@@ -196,7 +199,7 @@ void parse_select(char *arr, Select_request *request)
             puts("argument to long !");
             return;
         }
-
+        part3[strlen(part3)-1] = 0;
         strcpy(request->arg, part3);
     }
     else if (!strncmp(part1, "phone", 5))
@@ -218,7 +221,8 @@ void parse_select(char *arr, Select_request *request)
             puts("argument to long !");
             return;
         }
-
+        
+        part3[strlen(part3)-1] = 0;
         strcpy(request->arg, part3);
     }
     else if (!strncmp(part1, "date", 4))
@@ -239,7 +243,8 @@ void parse_select(char *arr, Select_request *request)
             puts("argument to long !");
             return;
         }
-
+        
+        part3[strlen(part3)-1] = 0;
         strcpy(request->arg, part3);
     }
     else if (!strncmp(part1, "debt", 4))
@@ -261,7 +266,8 @@ void parse_select(char *arr, Select_request *request)
             puts("argument to long !");
             return;
         }
-
+        
+        part3[strlen(part3)-1] = 0;
         strcpy(request->arg, part3);
     }
     else
