@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 
     char * part;
 
-    Select_request request;
+    Select_request request = {};
 
     while (flag)
     {

@@ -114,30 +114,42 @@ void set_operator(char *arr, Select_request *request)
 void parse_select(char *arr, Select_request *request)
 {
     char *part1 = strtok(NULL, " ");
-    char *part2 = NULL; //strtok(NULL /*+ strlen(part1)*/, " ");
+    char *part2 = NULL; // strtok(NULL /*+ strlen(part1)*/, " ");
     char *part3 = NULL;
+    char *part4 = NULL;
 
-    
     if (!part1)
     {
         puts("you must enter a field after select");
         request->field = UNKNOW_FIELD;
         return;
     }
-    
 
     if (!strncmp(part1, "first", 5))
     {
         part2 = strtok(NULL, " ");
         if (!strncmp(part2, "name", 4))
         {
-
             puts("first name !");
+            request->field = FIRST_NAME;
 
             // must be operator
             part3 = strtok(NULL, " ");
             set_operator(part3, request);
-            request->field = FIRST_NAME;
+
+            part4 = strtok(NULL, " ");
+            if (!part4)
+            {
+                puts("you must enter an argument after operator");
+                return;
+            }
+            if (strlen(part4) > 49)
+            {
+                puts("argument to long !");
+                return;
+            }
+
+            strcpy(request->arg, part4);
         }
     }
     else if (!strncmp(part1, "second", 5))
@@ -151,6 +163,20 @@ void parse_select(char *arr, Select_request *request)
             // must be operator
             part3 = strtok(NULL, " ");
             set_operator(part3, request);
+
+            part4 = strtok(NULL, " ");
+            if (!part4)
+            {
+                puts("you must enter an argument after operator");
+                return;
+            }
+            if (strlen(part4) > 49)
+            {
+                puts("argument to long !");
+                return;
+            }
+
+            strcpy(request->arg, part4);
         }
     }
     else if (!strncmp(part1, "id", 2))
@@ -158,30 +184,92 @@ void parse_select(char *arr, Select_request *request)
         puts("id !");
         request->field = ID;
 
+        part2 = strtok(NULL, " ");
         set_operator(part2, request);
+
+
+        part3 = strtok(NULL, " ");
+        if (!part3)
+        {
+            puts("you must enter an argument after operator !");
+            return;
+        }
+        if (strlen(part3) > 49)
+        {
+            puts("argument to long !");
+            return;
+        }
+
+        strcpy(request->arg, part3);
     }
     else if (!strncmp(part1, "phone", 5))
     {
 
         puts("phone !");
         request->field = PHONE;
+
+        part2 = strtok(NULL, " ");
         set_operator(part2, request);
+
+        part3 = strtok(NULL, " ");
+        if (!part3)
+        {
+            puts("you must enter an argument after operator");
+            return;
+        }
+        if (strlen(part3) > 49)
+        {
+            puts("argument to long !");
+            return;
+        }
+
+        strcpy(request->arg, part3);
     }
     else if (!strncmp(part1, "date", 4))
     {
         puts("date !");
         request->field = DATE;
+        part2 = strtok(NULL, " ");
         set_operator(part2, request);
+
+        part3 = strtok(NULL, " ");
+        if (!part3)
+        {
+            puts("you must enter an argument after operator");
+            return;
+        }
+        if (strlen(part3) > 49)
+        {
+            puts("argument to long !");
+            return;
+        }
+
+        strcpy(request->arg, part3);
     }
     else if (!strncmp(part1, "debt", 4))
     {
         puts("debt !");
         request->field = DEBT;
+
+        part2 = strtok(NULL, " ");
         set_operator(part2, request);
+
+        part3 = strtok(NULL, " ");
+        if (!part3)
+        {
+            puts("you must enter an argument after operator");
+            return;
+        }
+        if (strlen(part3) > 49)
+        {
+            puts("argument to long !");
+            return;
+        }
+
+        strcpy(request->arg, part3);
     }
     else
     {
-
         puts("unknow field !");
         request->field = UNKNOW_FIELD;
     }
