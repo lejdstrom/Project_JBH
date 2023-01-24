@@ -19,6 +19,9 @@ int main(int argc, char **argv)
     Vector_customer * data_base = NULL;
     data_base = init_db(argv[1]);
 
+    Vector_customer request_answer;
+    vector_init(&request_answer);
+
     if (!data_base)
     {
         printf("error with creating data base from file %s\n", argv[1]);
@@ -65,7 +68,14 @@ int main(int argc, char **argv)
         case SELECT:
             // parse the rest of the string
             parse_select(part, &request);
+            //printf("operator: %d field: %d arg: %s\n",request.operator, request.field, request.arg);
+            answer_request(data_base, &request_answer, function_dispatcher(&request), &request);
 
+            if(request_answer.total > 0)
+            {
+                print_db(&request_answer);
+            }
+            
             break;
         
         case SET:

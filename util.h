@@ -42,6 +42,8 @@ MenuChoice parse_first(char * arr);
 
 void parse_select(char *arr, Select_request *request);
 
+void set_operator(char *arr, Select_request *request);
+
 
 
 #endif
