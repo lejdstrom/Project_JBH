@@ -130,7 +130,6 @@ void parse_select(char *arr, Select_request *request)
         part2 = strtok(NULL, " ");
         if (!strncmp(part2, "name", 4))
         {
-            puts("first name !");
             request->field = FIRST_NAME;
 
             // must be operator
@@ -157,7 +156,6 @@ void parse_select(char *arr, Select_request *request)
         part2 = strtok(NULL, " ");
         if (!strncmp(part2, "name", 4))
         {
-            puts("second name !");
             request->field = SECOND_NAME;
 
             // must be operator
@@ -182,12 +180,10 @@ void parse_select(char *arr, Select_request *request)
     else if (!strncmp(part1, "id", 2))
     {
         // here we must check the id format
-        puts("id !");
         request->field = ID;
 
         part2 = strtok(NULL, " ");
         set_operator(part2, request);
-
 
         part3 = strtok(NULL, " ");
         if (!part3)
@@ -206,7 +202,6 @@ void parse_select(char *arr, Select_request *request)
     else if (!strncmp(part1, "phone", 5))
     {
         // here we must check the phone format
-        puts("phone !");
         request->field = PHONE;
 
         part2 = strtok(NULL, " ");
@@ -229,7 +224,6 @@ void parse_select(char *arr, Select_request *request)
     else if (!strncmp(part1, "date", 4))
     {
         // here we must check the date format
-        puts("date !");
         request->field = DATE;
         part2 = strtok(NULL, " ");
         set_operator(part2, request);
@@ -251,7 +245,6 @@ void parse_select(char *arr, Select_request *request)
     else if (!strncmp(part1, "debt", 4))
     {
         // here we must check the debt format
-        puts("debt !");
         request->field = DEBT;
 
         part2 = strtok(NULL, " ");

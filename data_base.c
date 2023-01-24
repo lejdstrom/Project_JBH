@@ -1,15 +1,14 @@
 #include "data_base.h"
 
-Vector_customer * init_db(char path[])
+Vector_customer *init_db(char path[])
 {
 
-
-    FILE * f = fopen(path, "r");
+    FILE *f = fopen(path, "r");
     int line_number = 1;
     int read = 0;
     int records = 0;
     char buffer[BUFFER_SIZE];
-    
+
     // test vector customer
     Vector_customer *v = malloc(sizeof(Vector_customer));
     vector_init(v);
@@ -18,7 +17,6 @@ Vector_customer * init_db(char path[])
     {
         printf("error with reading <%s> file\n", path);
     }
-
 
     // we skip the first line of our csv file
     fgets(buffer, sizeof(buffer), f);
@@ -30,17 +28,16 @@ Vector_customer * init_db(char path[])
 
         // we except 8 fields
         read = sscanf(buffer, "%49[^,],%49[^,],%9[0-9],%10[0-9],%u/%u/%u,%10[^\n]",
-        tmp.first_name,
-        tmp.second_name,
-        tmp.id,
-        tmp.phone_number,
-        &tmp.day,
-        &tmp.month,
-        &tmp.year,
-        tmp.debt
-        );
+                      tmp.first_name,
+                      tmp.second_name,
+                      tmp.id,
+                      tmp.phone_number,
+                      &tmp.day,
+                      &tmp.month,
+                      &tmp.year,
+                      tmp.debt);
 
-        if(read == 8)
+        if (read == 8)
         {
             // check if tmp.id already in db
             // if true then update customer.debt
@@ -85,18 +82,26 @@ int cmp_debt_sort(void *c1, void *c2)
     return debt1 - debt2;
 }
 
-void answer_request(Vector_customer *data_base, Vector_customer *out, cmp_func f,Select_request *request)
+void answer_request(Vector_customer *data_base, Vector_customer *out, cmp_func f, Select_request *request)
 {
     for (int i = 0; i < data_base->total; i++)
     {
-        if(f(&data_base->data[i], request->operator, request->arg))
+        if (f(&data_base->data[i], request->operator, request->arg))
         {
-            vector_add(out, &data_base->data[i]);
+            add_db(out, &data_base->data[i]);
         }
     }
 }
 
+void add_db(Vector_customer *v, Customer *c)
+{
+    if (v->capacity == v->total)
+    {
+        vector_resize(v, v->capacity * 2);
+    }
 
+    v->data[v->total++] = *c;
+}
 
 int cmp_first_name(Customer *c, Operators op, char *arg)
 {
@@ -104,13 +109,13 @@ int cmp_first_name(Customer *c, Operators op, char *arg)
     {
     case EQUAL:
         return (!strcmp(c->first_name, arg));
-    
+
     case NOT_EQUAL:
         return (strcmp(c->first_name, arg));
 
     case GREATER:
         return (strcmp(c->first_name, arg) > 0);
-    
+
     case SMALLER:
         return (strcmp(c->first_name, arg) < 0);
     }
@@ -122,13 +127,13 @@ int cmp_second_name(Customer *c, Operators op, char *arg)
     {
     case EQUAL:
         return (!strcmp(c->second_name, arg));
-    
+
     case NOT_EQUAL:
         return (strcmp(c->second_name, arg));
 
     case GREATER:
         return (strcmp(c->second_name, arg) > 0);
-    
+
     case SMALLER:
         return (strcmp(c->second_name, arg) < 0);
     }
@@ -140,10 +145,10 @@ int cmp_second_name(Customer *c, Operators op, char *arg)
     {
     case EQUAL:
         return (!strcmp(c-, arg));
-    
+
     case NOT_EQUAL:
         return;
-    
+
     case GREATER:
         return;
 
@@ -158,16 +163,16 @@ int cmp_id(Customer *c, Operators op, char *arg)
     switch (op)
     {
     case EQUAL:
-        return (!strcmp(c->id, arg));
-    
+        return (!strncmp(c->id, arg, 9));
+
     case NOT_EQUAL:
-        return (strcmp(c->id, arg));
-    
+        return (strncmp(c->id, arg, 9));
+
     case GREATER:
-        return (strcmp(c->id, arg) > 0);
+        return (strncmp(c->id, arg, 9) > 0);
 
     case SMALLER:
-        return (strcmp(c->id, arg) < 0);
+        return (strncmp(c->id, arg, 9) < 0);
     }
 }
 
@@ -180,10 +185,10 @@ int cmp_debt(Customer *c, Operators op, char *arg)
     {
     case EQUAL:
         return (c_debt == arg_debt);
-    
+
     case NOT_EQUAL:
         return (c_debt != arg_debt);
-    
+
     case GREATER:
         return (c_debt > arg_debt);
 
@@ -198,10 +203,10 @@ int cmp_phone(Customer *c, Operators op, char *arg)
     {
     case EQUAL:
         return !strncmp(c->phone_number, arg, 10);
-    
+
     case NOT_EQUAL:
         return strncmp(c->phone_number, arg, 10);
-    
+
     case GREATER:
         return (strncmp(c->phone_number, arg, 10) > 0);
 
@@ -216,7 +221,7 @@ cmp_func function_dispatcher(Select_request *request)
     {
     case FIRST_NAME:
         return cmp_first_name;
-    
+
     case SECOND_NAME:
         return cmp_second_name;
 
@@ -228,8 +233,8 @@ cmp_func function_dispatcher(Select_request *request)
 
     case DEBT:
         return cmp_debt;
-    
-    // case DATE:
-    //  return cmp_date;
+
+        // case DATE:
+        //  return cmp_date;
     }
 }
