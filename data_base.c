@@ -137,24 +137,23 @@ int cmp_second_name(Customer *c, Operators op, char *arg)
     }
 }
 
-/*int cmp_date(Customer *c, Operators op, char *arg)
+int cmp_date(Customer *c, Operators op, char *arg)
 {
     switch (op)
     {
     case EQUAL:
-        return (!strcmp(c-, arg));
+        return (!strcmp(c->date, arg));
 
     case NOT_EQUAL:
-        return;
+        return (strcmp(c->date, arg));
 
     case GREATER:
-        return;
+        return (strcmp(c->date, arg) > 0);
 
     case SMALLER:
-        return;
+        return (strcmp(c->date, arg) < 0);
     }
 }
-*/
 
 int cmp_id(Customer *c, Operators op, char *arg)
 {
@@ -232,7 +231,7 @@ cmp_func function_dispatcher(Select_request *request)
     case DEBT:
         return cmp_debt;
 
-        // case DATE:
-        //  return cmp_date;
+    case DATE:
+        return cmp_date;
     }
 }
