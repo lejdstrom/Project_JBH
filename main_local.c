@@ -38,6 +38,8 @@ int main(int argc, char **argv)
     {
         PROMPT
         memset(buffer, 0, sizeof(buffer));
+        request.field = UNKNOW_FIELD;
+        request.operator = UNKNOW_OP;
 
         fgets(buffer, BUFFER_SIZE - 1, stdin);
         strcpy(copy_buffer, buffer);

@@ -100,7 +100,7 @@ void set_operator(char *arr, Select_request *request)
         return;
     }
 
-    if(strlen(arr) > 1)
+    if(strlen(arr) > 2)
     {
         puts("error you must enter a valid operator (>, <, = , !=)");
         request->operator= UNKNOW_OP;
