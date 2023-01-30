@@ -54,6 +54,18 @@ void to_lower_str(char *str)
         *str = tolower(*str);
 }
 
+int is_digit_str(const char *str)
+{
+    for (size_t i = 0; i < strlen(str); i++)
+    {
+        if (!isdigit(str[i]))
+        {
+            return 0;
+        }       
+    }
+    return 1;
+}
+
 MenuChoice parse_first(char *arr)
 {
     if (!strncmp(arr, "print", 5))
@@ -83,7 +95,14 @@ void set_operator(char *arr, Select_request *request)
 {
     if (!arr)
     {
-        puts("you must enter an operator !");
+        puts("error you must enter an operator !");
+        request->operator= UNKNOW_OP;
+        return;
+    }
+
+    if(strlen(arr) > 1)
+    {
+        puts("error you must enter a valid operator (>, <, = , !=)");
         request->operator= UNKNOW_OP;
         return;
     }
@@ -199,6 +218,12 @@ void parse_select(char *arr, Select_request *request)
             puts("error id len must be 10 !");
             return;
         }
+        if(!is_digit_str(part3))
+        {
+            puts("error id must be only numbers !");
+            return;
+        }
+
         part3[strlen(part3)-1] = 0;
         strcpy(request->arg, part3);
     }
@@ -219,6 +244,11 @@ void parse_select(char *arr, Select_request *request)
         if (strlen(part3) != 11)
         {
             puts("error phone number must be 10 numbers !");
+            return;
+        }
+        if(!is_digit_str(part3))
+        {
+            puts("error id must be only numbers !");
             return;
         }
         
@@ -266,6 +296,12 @@ void parse_select(char *arr, Select_request *request)
             puts("argument to long !");
             return;
         }
+        if (atoi(part3) == 0)
+        {
+            puts("error you must enter a valid number");
+            return;
+        }
+        
         
         part3[strlen(part3)-1] = 0;
         strcpy(request->arg, part3);
