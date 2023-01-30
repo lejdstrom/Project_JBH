@@ -37,6 +37,8 @@ void swap(void* v1, void* v2, int size);
 
 void to_lower_str(char *str);
 
+int is_digit_str(const char * str);
+
 
 MenuChoice parse_first(char * arr);
 

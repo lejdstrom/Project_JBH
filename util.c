@@ -302,7 +302,6 @@ void parse_select(char *arr, Select_request *request)
             return;
         }
         
-        
         part3[strlen(part3)-1] = 0;
         strcpy(request->arg, part3);
     }
