@@ -4,14 +4,12 @@
 
 void print_customer(Customer *c)
 {
-    printf("%s %s id: %s phone: %s date: %u/%u/%u\t-- debt: %s\n",
+    printf("%s %s id: %s phone: %s date: %s\t-- debt: %s\n",
     c->first_name,
     c->second_name,
     c->id,
     c->phone_number,
-    c->day,
-    c->month,
-    c->year,
+    c->date,
     c->debt
     );
 }

@@ -5,6 +5,7 @@
 #define PHONE_LEN 10
 #define ID_LEN 9
 #define MAX_DEBT_LEN 10
+#define DATE_LEN 10
 
 typedef struct
 {
@@ -14,7 +15,8 @@ typedef struct
     char id[ID_LEN + 1];
     char phone_number[PHONE_LEN + 1];
 
-    unsigned day,month,year; // Date field
+    //unsigned day,month,year; // Date field
+    char date[DATE_LEN +1]; // dd/mm/yyyy
 
     char debt[MAX_DEBT_LEN]; // char to avoid bad input like: 100mklfas
 } Customer;

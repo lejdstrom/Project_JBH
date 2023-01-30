@@ -65,7 +65,7 @@ void vector_add(Vector_customer *v, Customer * c)
 
         int result = a+b;
 
-        snprintf(v->data[index].debt, ID_LEN, "%d", result);
+        snprintf(v->data[index].debt, MAX_DEBT_LEN, "%d", result);
     }
     else
     {
@@ -98,6 +98,7 @@ int index_of_id(Vector_customer *v, char * id)
 
 void vector_print(Vector_customer *v)
 {
+    puts("");
     for (int i = 0; i < v->total; i++)
     {
         print_customer(&v->data[i]);

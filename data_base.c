@@ -26,18 +26,16 @@ Vector_customer *init_db(char path[])
         line_number++;
         Customer tmp = {};
 
-        // we except 8 fields
-        read = sscanf(buffer, "%49[^,],%49[^,],%9[0-9],%10[0-9],%u/%u/%u,%10[^\n]",
+        // we except 6 fields
+        read = sscanf(buffer, "%49[^,],%49[^,],%9[0-9],%10[0-9],%10[^,],%10[^\n]",
                       tmp.first_name,
                       tmp.second_name,
                       tmp.id,
                       tmp.phone_number,
-                      &tmp.day,
-                      &tmp.month,
-                      &tmp.year,
+                      tmp.date,
                       tmp.debt);
 
-        if (read == 8)
+        if (read == 6)
         {
             // check if tmp.id already in db
             // if true then update customer.debt
