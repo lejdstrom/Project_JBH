@@ -4,7 +4,7 @@
 
 void print_customer(Customer *c)
 {
-    printf("%s %s id: %s phone: %s date: %s\t-- debt: %s\n",
+    printf("%-10s %-15s id: %s phone: %s date: %s\t----\tdebt: %s\n",
     c->first_name,
     c->second_name,
     c->id,

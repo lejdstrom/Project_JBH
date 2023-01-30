@@ -144,7 +144,7 @@ void parse_select(char *arr, Select_request *request)
             }
             if (strlen(part4) > 49)
             {
-                puts("argument to long !");
+                puts("error argument to long !");
                 return;
             }
 
@@ -172,7 +172,7 @@ void parse_select(char *arr, Select_request *request)
             }
             if (strlen(part4) > 49)
             {
-                puts("argument to long !");
+                puts("error argument to long !");
                 return;
             }
 
@@ -194,9 +194,9 @@ void parse_select(char *arr, Select_request *request)
             puts("you must enter an argument after operator !");
             return;
         }
-        if (strlen(part3) > 49)
+        if (strlen(part3) > 10)
         {
-            puts("argument to long !");
+            puts("error id len must be 10 !");
             return;
         }
         part3[strlen(part3)-1] = 0;
@@ -216,9 +216,9 @@ void parse_select(char *arr, Select_request *request)
             puts("you must enter an argument after operator");
             return;
         }
-        if (strlen(part3) > 49)
+        if (strlen(part3) != 11)
         {
-            puts("argument to long !");
+            puts("error phone number must be 10 numbers !");
             return;
         }
         
@@ -238,9 +238,9 @@ void parse_select(char *arr, Select_request *request)
             puts("you must enter an argument after operator");
             return;
         }
-        if (strlen(part3) > 49)
+        if (strlen(part3) != 11)
         {
-            puts("argument to long !");
+            puts("error date should be formated: dd/mm/yyyy");
             return;
         }
         
@@ -261,7 +261,7 @@ void parse_select(char *arr, Select_request *request)
             puts("you must enter an argument after operator");
             return;
         }
-        if (strlen(part3) > 49)
+        if (strlen(part3) > 10)
         {
             puts("argument to long !");
             return;
