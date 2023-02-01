@@ -64,7 +64,7 @@ void free_db(Vector_customer *v)
 // sort vector according to debt field
 void print_db(Vector_customer *v)
 {
-    quick_sort(v->data, sizeof(Customer), 0, v->total, cmp_debt_sort);
+    //quick_sort(v->data, sizeof(Customer), 0, v->total, cmp_debt_sort);
     vector_print(v);
 }
 

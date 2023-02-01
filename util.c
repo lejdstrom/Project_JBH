@@ -144,9 +144,18 @@ void parse_select(char *arr, Select_request *request)
         return;
     }
 
-    if (!strncmp(part1, "first", 5))
+    if (!strcmp(part1, "first"))
     {
         part2 = strtok(NULL, " ");
+
+        // not sure needed
+        if(!part2)
+        {
+            puts("error you should insert a space after first !");
+            request->field = UNKNOW_FIELD;
+            return;
+        }
+
         if (!strncmp(part2, "name", 4))
         {
             request->field = FIRST_NAME;
@@ -175,6 +184,17 @@ void parse_select(char *arr, Select_request *request)
     else if (!strncmp(part1, "second", 5))
     {
         part2 = strtok(NULL, " ");
+
+        // not sure needed
+        if(!part2)
+        {
+            puts("error you should insert a space after second !");
+            request->field = UNKNOW_FIELD;
+            return;
+        }
+
+
+
         if (!strncmp(part2, "name", 4))
         {
             request->field = SECOND_NAME;
@@ -213,18 +233,22 @@ void parse_select(char *arr, Select_request *request)
             puts("you must enter an argument after operator !");
             return;
         }
+
+        // remove new line character
+        part3[strlen(part3)-1] = 0;
+
         if (strlen(part3) > 10)
         {
             puts("error id len must be 10 !");
             return;
         }
+
         if(!is_digit_str(part3))
         {
             puts("error id must be only numbers !");
             return;
         }
 
-        part3[strlen(part3)-1] = 0;
         strcpy(request->arg, part3);
     }
     else if (!strncmp(part1, "phone", 5))
@@ -241,6 +265,10 @@ void parse_select(char *arr, Select_request *request)
             puts("you must enter an argument after operator");
             return;
         }
+
+        // remove new line character
+        part3[strlen(part3)-1] = 0;
+
         if (strlen(part3) != 11)
         {
             puts("error phone number must be 10 numbers !");
@@ -252,7 +280,6 @@ void parse_select(char *arr, Select_request *request)
             return;
         }
         
-        part3[strlen(part3)-1] = 0;
         strcpy(request->arg, part3);
     }
     else if (!strncmp(part1, "date", 4))

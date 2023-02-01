@@ -38,8 +38,6 @@ int main(int argc, char **argv)
     {
         PROMPT
         memset(buffer, 0, sizeof(buffer));
-        request.field = UNKNOW_FIELD;
-        request.operator = UNKNOW_OP;
 
         fgets(buffer, BUFFER_SIZE - 1, stdin);
         strcpy(copy_buffer, buffer);
@@ -69,6 +67,7 @@ int main(int argc, char **argv)
 
             if (request_answer.total > 0)
             {
+                //quick_sort(&request_answer, 0, request_answer.total, cmp_debt_sort);
                 print_db(&request_answer);
                 vector_free(&request_answer);
             }
