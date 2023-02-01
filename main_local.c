@@ -31,8 +31,19 @@ int main(int argc, char **argv)
     char delimiters[] = {" ,\n"};
     int flag = 1;
 
-    char *part;
+
+    //select request
     Select_request request = {};
+    char *part;
+
+    // set request
+    char *part1;
+    int k = 1;
+    char * fields[] = {"first name=", "second name=", "id=", "phone=", "date=", "debt=" };
+    char * fields_arg_ptr[6] = {};
+    Set_request set_req = {};
+    Customer customer_tmp = {};
+
 
     while (flag)
     {
@@ -75,7 +86,38 @@ int main(int argc, char **argv)
             break;
 
         case SET:
+
             // parse and check the res of the string
+
+            //test of parse set logic
+            printf("here the string after set: %s\n", part);
+            parse_set(part, &set_req, &customer_tmp);
+
+            /*
+            part1 = strtok(NULL, ",\n");
+
+            if (!strncmp(part1, fields[FIRST_NAME], 11))
+            {
+                // look for string after equal
+                //should be first name
+                fields_arg_ptr[FIRST_NAME] = part1 + 11; 
+
+                printf("here the string after equal: %s\n", fields_arg_ptr[FIRST_NAME]);
+
+            }
+            
+            k=1;
+            printf("%d word parsed: %s\n", k++, part1);
+
+            while(part1)
+            {
+                part1 = strtok(NULL, ",\n");
+
+                printf("%d word parsed: %s\n", k++, part1);
+            }
+
+            */
+
             break;
 
         case QUIT:

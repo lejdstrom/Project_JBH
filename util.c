@@ -91,6 +91,14 @@ MenuChoice parse_first(char *arr)
     }
 }
 
+void parse_set(char *arr, Set_request *set_request, Customer *tmp)
+{
+}
+
+char set_command_pattern[]={"first name=XXXXXXX, second name=XXXXXXXX, id=XXXXXXXXXX, phone=XXXXXXXXXX, date=XX/XX/XXXX, debt=XXXXXXXXXX"};
+
+
+
 void set_operator(char *arr, Select_request *request)
 {
     if (!arr)
