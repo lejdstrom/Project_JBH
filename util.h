@@ -22,12 +22,12 @@ typedef enum
 
 typedef enum
 {
-    FIRST_NAME, SECOND_NAME, ID, PHONE, DATE, DEBT, UNKNOW_FIELD
+    FIRST_NAME = 1, SECOND_NAME, ID, PHONE, DATE, DEBT, UNKNOW_FIELD
 }Fields;
 
 typedef enum
 {
-    ERR_F_NAME, ERR_S_NAME, ERR_ID, ERR_PHONE, ERR_DATE, ERR_DEBT, NO_ERROR
+    NO_FIELDS_READ, ERR_F_NAME, ERR_S_NAME, ERR_ID, ERR_PHONE, ERR_DATE, ERR_DEBT, NO_ERROR = -5
 
 }Set_Errors;
 
@@ -38,13 +38,19 @@ typedef enum
 
 typedef enum
 {
-    PHONE_BAD_LEN, PHONE_NOT_NUMBER, PHONE_NO_ERROR
+    PHONE_BAD_LEN, PHONE_NOT_NUMBER, PHONE_NOT_BEGIN_WITH_ZERO, PHONE_NO_ERROR
 }Set_Errors_PHONE;
 
 typedef enum
 {
-    DATE_BAD_FORMAT, DATE_UNREALISTIC /* 45/45/1000 */, DATE_NO_ERROR
-}Set_Errors_DATE
+    DATE_BAD_FORMAT, DATE_NO_ERROR
+}Set_Errors_DATE;
+
+typedef enum
+{
+    DEBT_IS_NOT_NUMBER, DEBT_BAD_LEN, DEBT_NO_ERROR
+}Set_Errors_DEBT;
+
 
 typedef enum
 {
@@ -68,6 +74,35 @@ typedef struct
 }Select_request;
 
 
+
+typedef struct
+{
+    unsigned int no_error;
+    Set_Errors_DATE date;
+    Set_Errors_DEBT debt;
+    Set_Errors_ID id;
+    Set_Errors_PHONE phone;
+
+}Customer_Fields_Errors;
+
+
+
+
+Set_Errors parse_set(char *set_command, Customer *customer);
+
+Set_Errors_ID validate_ID(char id[]);
+
+Set_Errors_DATE validate_Date(char date[]);
+
+Set_Errors_PHONE validate_Phone(char phone[]);
+
+Set_Errors_DEBT validate_Debt(char debt[]);
+
+
+
+Customer_Fields_Errors validate_fields(Customer *customer);
+
+
 void quick_sort(void* v, int size, int left, int right, int (*comp)(void*, void*));
 void swap(void* v1, void* v2, int size);
 
@@ -78,7 +113,7 @@ int is_digit_str(const char * str);
 
 MenuChoice parse_first(char * arr);
 
-void parse_set(char *arr, Set_request * set_request, Customer *tmp);
+//void parse_set(char *arr, Set_request * set_request, Customer *tmp);
 
 void print_set_success_message();
 

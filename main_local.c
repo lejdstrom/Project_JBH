@@ -38,11 +38,12 @@ int main(int argc, char **argv)
 
     // set request
     char *part1;
-    int k = 1;
-    char * fields[] = {"first name=", "second name=", "id=", "phone=", "date=", "debt=" };
-    char * fields_arg_ptr[6] = {};
+    //int k = 1;
+    //char * fields[] = {"first name=", "second name=", "id=", "phone=", "date=", "debt=" };
+    //char * fields_arg_ptr[6] = {};
     Set_request set_req = {};
     Customer customer_tmp = {};
+    char tmp_buff[BUFFER_SIZE]={};
 
 
     while (flag)
@@ -87,37 +88,36 @@ int main(int argc, char **argv)
 
         case SET:
 
-            // parse and check the res of the string
+        strcpy(tmp_buff, buffer + strlen(part));
 
-            //test of parse set logic
-            printf("here the string after set: %s\n", part);
+
+        if(parse_set(tmp_buff, &customer_tmp) == NO_ERROR)
+        {
+            if(validate_fields(&customer_tmp).no_error == 1)
+            {
+                // add to data base
+                // check if id already in ...
+            }
+            else
+            {
+                // display adapted error message
+            }
+        }
+
+
+        /*
+            // parse and check the rest of the string
             parse_set(part, &set_req, &customer_tmp);
 
-            /*
-            part1 = strtok(NULL, ",\n");
-
-            if (!strncmp(part1, fields[FIRST_NAME], 11))
+            if (set_req.error == NO_ERROR)
             {
-                // look for string after equal
-                //should be first name
-                fields_arg_ptr[FIRST_NAME] = part1 + 11; 
-
-                printf("here the string after equal: %s\n", fields_arg_ptr[FIRST_NAME]);
-
+                // display_success message
             }
-            
-            k=1;
-            printf("%d word parsed: %s\n", k++, part1);
-
-            while(part1)
+            else
             {
-                part1 = strtok(NULL, ",\n");
-
-                printf("%d word parsed: %s\n", k++, part1);
+                // diplay error message
             }
-
-            */
-
+        */  
             break;
 
         case QUIT:
