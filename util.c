@@ -19,7 +19,7 @@ Set_Errors parse_set(char set_command[], Customer *customer)
     switch (read)
     {
     case 0:
-        pust("problem with set command: 0 fields were read");
+        puts("problem with set command: 0 fields were read");
         return NO_FIELDS_READ;
 
     case FIRST_NAME:
@@ -279,32 +279,7 @@ MenuChoice parse_first(char *arr)
     }
 }
 
-void parse_set(char *arr, Set_request *set_request, Customer *tmp)
-{
-    /*
-    part1 = strtok(NULL, ",\n");
 
-    if (!strncmp(part1, fields[FIRST_NAME], 11))
-    {
-        // look for string after equal
-        //should be first name
-        fields_arg_ptr[FIRST_NAME] = part1 + 11;
-
-        printf("here the string after equal: %s\n", fields_arg_ptr[FIRST_NAME]);
-
-    }
-
-    k=1;
-    printf("%d word parsed: %s\n", k++, part1);
-
-    while(part1)
-    {
-        part1 = strtok(NULL, ",\n");
-
-        printf("%d word parsed: %s\n", k++, part1);
-    }
-    */
-}
 
 void set_operator(char *arr, Select_request *request)
 {
