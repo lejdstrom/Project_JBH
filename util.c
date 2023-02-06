@@ -6,7 +6,7 @@ Set_Errors parse_set(char set_command[], Customer *customer)
     //Customer tmp = {};
 
     // we except 6 fields
-    read = sscanf(set_command, " first name=%49[^,], second name=%49[^,], id=%9[0-9], phone=%10[0-9], date=%10[^,], debt=%10[^\n]",
+    read = sscanf(set_command, " first name=%49[^,], second name=%49[^,], id=%9[^,], phone=%10[^,], date=%10[^,], debt=%10[^\n]",
                   customer->first_name,
                   customer->second_name,
                   customer->id,
@@ -15,40 +15,38 @@ Set_Errors parse_set(char set_command[], Customer *customer)
                   customer->debt
                   );
 
-    // big bug if read == 0 because FIRST_NAME == 0 !!!
     switch (read)
     {
     case 0:
-        puts("problem with set command: 0 fields were read");
-        return NO_FIELDS_READ;
-
-    case FIRST_NAME:
-        puts("we read only first name");
+        return ERR_FAIL_READING;
+    
+    case 1:
         return ERR_F_NAME;
 
-    case SECOND_NAME:
-        puts("we read until second name");
+    case 2:
         return ERR_S_NAME;
 
-    case ID:
-        puts("we read until id");
+    case 3:
         return ERR_ID;
 
-    case PHONE:
-        puts("we read until phone");
+    case 4:
         return ERR_PHONE;
     
-    case DATE:
-        puts("we read until date");
+    case 5:
         return ERR_DATE;
 
+    case 6:
+        puts("we read all the fields !");
+        return NO_ERROR;
+    /*
     case DEBT:
         puts("we read until debt");
         return ERR_DEBT;
-
+    
     case NO_ERROR:
         puts("no error ! we read all the fields !");
         return NO_ERROR;
+    */
     }
 }
 
@@ -61,7 +59,7 @@ Set_Errors_ID validate_ID(char id[])
         return ID_NOT_NUMBER;
     }
 
-    if( id_len > 10 || id_len < 10 )
+    if( id_len > 9 || id_len < 9 )
     {
         return ID_BAD_LEN;
     }
@@ -166,26 +164,116 @@ Set_Errors_DEBT validate_Debt(char debt[])
     return DEBT_NO_ERROR;
 }
 
-Customer_Fields_Errors validate_fields(Customer *customer)
+void display_fields_error_message(Customer_Fields_Errors *fields_error)
+{
+    switch (fields_error->date)
+    {
+    case DATE_NO_ERROR:
+        break;
+    
+    case DATE_BAD_FORMAT:
+        puts("date should be formated : dd/mm/yyyy");
+        puts("of course day month and year should be valid");
+        break;
+    }
+
+    switch (fields_error->debt)
+    {
+    case DEBT_NO_ERROR:
+        break;
+    
+    case DEBT_IS_NOT_NUMBER:
+        puts("debt should be a number");
+        break;
+
+    case DEBT_BAD_LEN:
+        puts("debt is to long");
+        break;
+    }
+
+    switch (fields_error->id)
+    {
+    case ID_NO_ERROR:
+        break;
+
+    case ID_NOT_NUMBER:
+        puts("id should be a number");
+        break;
+
+    case ID_BAD_LEN:
+        puts("id len should be 10");
+        break;
+    }
+
+    switch (fields_error->phone)
+    {
+    case PHONE_NO_ERROR:
+        break;
+
+    case PHONE_BAD_LEN:
+        puts("phone len should be 10");
+        break;
+
+    case PHONE_NOT_BEGIN_WITH_ZERO:
+        puts("phone number must start with zero");
+        break;
+
+    case PHONE_NOT_NUMBER:
+        puts("phone should be only number");
+        break;
+    }
+}
+
+void display_set_error_message(Set_Errors set_err)
+{
+    switch(set_err)
+    {
+        case ERR_FAIL_READING:
+            puts("problem with set command: 0 fields were read");
+            return;
+        
+        case ERR_F_NAME:
+            puts("we read only first name");
+            return;
+
+        case ERR_S_NAME:
+            puts("we read until second name");
+            return;
+
+        case ERR_ID:
+            puts("we read until id");
+            return;
+        
+        case ERR_PHONE:
+            puts("we read until phone");
+            return;
+
+        case ERR_DATE:
+            puts("we read until date");
+            return;
+    }
+}
+
+void validate_fields(Customer *customer, Customer_Fields_Errors * tmp)
 {
 
-    Customer_Fields_Errors tmp = {};
+    //Customer_Fields_Errors fields_error = {};
 
-    tmp.date = validate_Date(customer->date);
-    tmp.debt = validate_Debt(customer->debt);
-    tmp.id = validate_ID(customer->id);
-    tmp.phone = validate_Phone(customer->phone_number);
+    tmp->date = validate_Date(customer->date);
+    tmp->debt = validate_Debt(customer->debt);
+    tmp->id = validate_ID(customer->id);
+    tmp->phone = validate_Phone(customer->phone_number);
 
-    if(tmp.date == DATE_NO_ERROR && tmp.debt == DEBT_NO_ERROR && tmp.id == ID_NO_ERROR && tmp.phone == PHONE_NO_ERROR)
+    if(tmp->date == DATE_NO_ERROR && tmp->debt == DEBT_NO_ERROR && tmp->id == ID_NO_ERROR && tmp->phone == PHONE_NO_ERROR)
     {
-        tmp.no_error = 1;
+        tmp->no_error = 1;
     }
     else
     {
-        tmp.no_error = 0;
+        tmp->no_error = 0;
     }
     
-    return tmp;
+    return;
 }
 
 void quick_sort(void *v, int size, int left, int right, int (*comp)(void *, void *))

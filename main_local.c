@@ -42,6 +42,8 @@ int main(int argc, char **argv)
     //char * fields[] = {"first name=", "second name=", "id=", "phone=", "date=", "debt=" };
     //char * fields_arg_ptr[6] = {};
     Set_request set_req = {};
+    Customer_Fields_Errors customer_fields_errors = {};
+    Set_Errors set_errors;
     Customer customer_tmp = {};
     char tmp_buff[BUFFER_SIZE]={};
 
@@ -90,18 +92,29 @@ int main(int argc, char **argv)
 
         strcpy(tmp_buff, buffer + strlen(part));
 
+        set_errors = parse_set(tmp_buff, &customer_tmp);
 
-        if(parse_set(tmp_buff, &customer_tmp) == NO_ERROR)
+
+        if(set_errors == NO_ERROR)
         {
-            if(validate_fields(&customer_tmp).no_error == 1)
+            validate_fields(&customer_tmp, &customer_fields_errors);
+
+            if(customer_fields_errors.no_error == 1)
             {
                 // add to data base
                 // check if id already in ...
+
             }
             else
             {
                 // display adapted error message
+                display_fields_error_message(&customer_fields_errors);
             }
+        }
+        // display adapted error message, if parse_set failed
+        else
+        {
+
         }
 
 

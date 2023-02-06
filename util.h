@@ -22,12 +22,12 @@ typedef enum
 
 typedef enum
 {
-    FIRST_NAME = 1, SECOND_NAME, ID, PHONE, DATE, DEBT, UNKNOW_FIELD
+    FIRST_NAME, SECOND_NAME, ID, PHONE, DATE, DEBT, UNKNOW_FIELD
 }Fields;
 
 typedef enum
 {
-    NO_FIELDS_READ, ERR_F_NAME, ERR_S_NAME, ERR_ID, ERR_PHONE, ERR_DATE, ERR_DEBT, NO_ERROR = -5
+    ERR_FAIL_READING, ERR_F_NAME, ERR_S_NAME, ERR_ID, ERR_PHONE, ERR_DATE, ERR_DEBT, NO_ERROR
 
 }Set_Errors;
 
@@ -98,9 +98,11 @@ Set_Errors_PHONE validate_Phone(char phone[]);
 
 Set_Errors_DEBT validate_Debt(char debt[]);
 
+void display_fields_error_message(Customer_Fields_Errors * fields_error);
 
+void display_set_error_message(Set_Errors set_err);
 
-Customer_Fields_Errors validate_fields(Customer *customer);
+void validate_fields(Customer *customer, Customer_Fields_Errors * tmp);
 
 
 void quick_sort(void* v, int size, int left, int right, int (*comp)(void*, void*));
