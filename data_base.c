@@ -86,12 +86,12 @@ void answer_request(Vector_customer *data_base, Vector_customer *out, cmp_func f
     {
         if (f(&data_base->data[i], request->operator, request->arg))
         {
-            add_db(out, &data_base->data[i]);
+            add_customer_to_answer_request(out, &data_base->data[i]);
         }
     }
 }
 
-void add_db(Vector_customer *v, Customer *c)
+void add_customer_to_answer_request(Vector_customer *v, Customer *c)
 {
     if (v->capacity == v->total)
     {

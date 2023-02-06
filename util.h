@@ -33,7 +33,7 @@ typedef enum
 
 typedef enum
 {
-    ID_ALREADY_EXIST_WITH_DIFF_NAME, ID_BAD_LEN, ID_NOT_NUMBER, ID_NO_ERROR
+    ID_BAD_LEN, ID_NOT_NUMBER, ID_NO_ERROR
 }Set_Errors_ID;
 
 typedef enum
@@ -54,15 +54,15 @@ typedef enum
 
 typedef enum
 {
-    NEW_CUSTOMER, UPDATE_PHONE, UPDATE_DEBT
+    NEW_CUSTOMER, UPDATE_PHONE, UPDATE_DEBT, ID_ALREADY_EXIST_WITH_DIFF_NAME
 
-}Set_sucess;
+}Set_Insert_Db_Message;
 
 
 typedef struct
 {
     Set_Errors error;
-    Set_sucess succes;
+    Set_Insert_Db_Message succes;
 }Set_request;
 
 

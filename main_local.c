@@ -91,9 +91,7 @@ int main(int argc, char **argv)
         case SET:
 
         strcpy(tmp_buff, buffer + strlen(part));
-
         set_errors = parse_set(tmp_buff, &customer_tmp);
-
 
         if(set_errors == NO_ERROR)
         {
@@ -103,6 +101,7 @@ int main(int argc, char **argv)
             {
                 // add to data base
                 // check if id already in ...
+                
 
             }
             else
@@ -114,23 +113,8 @@ int main(int argc, char **argv)
         // display adapted error message, if parse_set failed
         else
         {
-
+            display_set_error_message(set_errors);
         }
-
-
-        /*
-            // parse and check the rest of the string
-            parse_set(part, &set_req, &customer_tmp);
-
-            if (set_req.error == NO_ERROR)
-            {
-                // display_success message
-            }
-            else
-            {
-                // diplay error message
-            }
-        */  
             break;
 
         case QUIT:

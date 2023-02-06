@@ -15,7 +15,7 @@ typedef int (*cmp_func)(Customer *c, Operators op, char *args);
 
 void answer_request(Vector_customer *data_base, Vector_customer *out, cmp_func, Select_request *request);
 
-void add_db(Vector_customer *v, Customer *c);
+void add_customer_to_answer_request(Vector_customer *v, Customer *c);
 
 cmp_func function_dispatcher(Select_request *request);
 
