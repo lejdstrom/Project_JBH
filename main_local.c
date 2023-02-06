@@ -31,22 +31,16 @@ int main(int argc, char **argv)
     char delimiters[] = {" ,\n"};
     int flag = 1;
 
-
-    //select request
+    // select request
     Select_request request = {};
     char *part;
 
     // set request
-    char *part1;
-    //int k = 1;
-    //char * fields[] = {"first name=", "second name=", "id=", "phone=", "date=", "debt=" };
-    //char * fields_arg_ptr[6] = {};
-    Set_request set_req = {};
     Customer_Fields_Errors customer_fields_errors = {};
     Set_Errors set_errors;
+    Set_Insert_Db_Message set_message;
     Customer customer_tmp = {};
-    char tmp_buff[BUFFER_SIZE]={};
-
+    char tmp_buff[BUFFER_SIZE] = {};
 
     while (flag)
     {
@@ -63,7 +57,6 @@ int main(int argc, char **argv)
         {
         case PRINT:
             print_db(data_base);
-            // goto free buffer
             break;
 
         case SELECT:
@@ -81,7 +74,7 @@ int main(int argc, char **argv)
 
             if (request_answer.total > 0)
             {
-                //quick_sort(&request_answer, 0, request_answer.total, cmp_debt_sort);
+                // quick_sort(&request_answer, 0, request_answer.total, cmp_debt_sort);
                 print_db(&request_answer);
                 vector_free(&request_answer);
             }
@@ -90,31 +83,30 @@ int main(int argc, char **argv)
 
         case SET:
 
-        strcpy(tmp_buff, buffer + strlen(part));
-        set_errors = parse_set(tmp_buff, &customer_tmp);
+            strcpy(tmp_buff, buffer + strlen(part));
+            set_errors = parse_set(tmp_buff, &customer_tmp);
 
-        if(set_errors == NO_ERROR)
-        {
-            validate_fields(&customer_tmp, &customer_fields_errors);
-
-            if(customer_fields_errors.no_error == 1)
+            if (set_errors == NO_ERROR)
             {
-                // add to data base
-                // check if id already in ...
-                
+                validate_fields(&customer_tmp, &customer_fields_errors);
 
+                if (customer_fields_errors.no_error)
+                {
+                    // add to data base
+                    set_message = add_customer_to_db(data_base, &customer_tmp, argv[1]);
+                    display_insert_db_message(set_message, &customer_tmp);
+                }
+                else
+                {
+                    // display adapted error message
+                    display_fields_error_message(&customer_fields_errors);
+                }
             }
+            // display adapted error message, if parse_set failed
             else
             {
-                // display adapted error message
-                display_fields_error_message(&customer_fields_errors);
+                display_set_error_message(set_errors);
             }
-        }
-        // display adapted error message, if parse_set failed
-        else
-        {
-            display_set_error_message(set_errors);
-        }
             break;
 
         case QUIT:

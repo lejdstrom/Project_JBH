@@ -64,7 +64,7 @@ void free_db(Vector_customer *v)
 // sort vector according to debt field
 void print_db(Vector_customer *v)
 {
-    //quick_sort(v->data, sizeof(Customer), 0, v->total, cmp_debt_sort);
+    // quick_sort(v->data, sizeof(Customer), 0, v->total, cmp_debt_sort);
     vector_print(v);
 }
 
@@ -86,12 +86,12 @@ void answer_request(Vector_customer *data_base, Vector_customer *out, cmp_func f
     {
         if (f(&data_base->data[i], request->operator, request->arg))
         {
-            add_customer_to_answer_request(out, &data_base->data[i]);
+            add_customer_to_vector(out, &data_base->data[i]);
         }
     }
 }
 
-void add_customer_to_answer_request(Vector_customer *v, Customer *c)
+void add_customer_to_vector(Vector_customer *v, Customer *c)
 {
     if (v->capacity == v->total)
     {
@@ -99,6 +99,89 @@ void add_customer_to_answer_request(Vector_customer *v, Customer *c)
     }
 
     v->data[v->total++] = *c;
+}
+
+Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char path[])
+{
+
+    int index = index_of_id(v, c->id);
+
+    if (index >= 0) // found in our data base
+    {
+        // check if fname and sname are the same
+
+        if (strcmp(v->data[index].first_name, c->first_name) || strcmp(v->data[index].second_name, c->second_name))
+        {
+            // not the same
+            return ID_ALREADY_EXIST_WITH_DIFF_NAME;
+        }
+
+        if (strcmp(v->data[index].phone_number, c->phone_number))
+        {
+            // update phone number
+            snprintf(v->data[index].phone_number, PHONE_LEN, "%s", c->phone_number);
+            return UPDATE_PHONE;
+        }
+
+        int old_debt = atoi(v->data[index].debt);
+        int new_debt = atoi(c->debt);
+
+        int result = old_debt + new_debt;
+
+        if (result != old_debt)
+        {
+            snprintf(v->data[index].debt, MAX_DEBT_LEN, "%d", result);
+            return UPDATE_DEBT;
+        }
+    }
+    else // not found in db, so we must add it
+    {
+
+        // add in hard drive
+        FILE *f = fopen(path, "a");
+
+        if (!f)
+        {
+            printf("error with reading <%s> file\n", path);
+            return;
+        }
+
+        fprintf(f, "\n%s,%s,%s,%s,%s,%s",
+                c->first_name,
+                c->second_name,
+                c->id,
+                c->phone_number,
+                c->date,
+                c->debt);
+
+        fclose(f);
+
+        // add in db (ram)
+        add_customer_to_vector(v, c);
+
+        return NEW_CUSTOMER;
+    }
+}
+
+void display_insert_db_message(Set_Insert_Db_Message message, Customer *customer)
+{
+    switch (message)
+    {
+    case ID_ALREADY_EXIST_WITH_DIFF_NAME:
+        printf("the id: %s is already in data base with a different name !\n", customer->id);
+        return;
+
+    case UPDATE_PHONE:
+        printf("the phone of %s %s was updated to: %s\n", customer->first_name, customer->second_name, customer->phone_number);
+        return;
+
+    case UPDATE_DEBT:
+        printf("the debt of %s %s was updated\n", customer->first_name, customer->second_name);
+        return;
+
+    case NEW_CUSTOMER:
+        printf("new customer ! %s %s was added to db\n", customer->first_name, customer->second_name);
+    }
 }
 
 int cmp_first_name(Customer *c, Operators op, char *arg)

@@ -2,11 +2,8 @@
 
 Set_Errors parse_set(char set_command[], Customer *customer)
 {
-    int read = 0;
-    //Customer tmp = {};
-
     // we except 6 fields
-    read = sscanf(set_command, " first name=%49[^,], second name=%49[^,], id=%9[^,], phone=%10[^,], date=%10[^,], debt=%10[^\n]",
+    int read = sscanf(set_command, " first name=%49[^,], second name=%49[^,], id=%9[^,], phone=%10[^,], date=%10[^,], debt=%10[^\n]",
                   customer->first_name,
                   customer->second_name,
                   customer->id,
@@ -38,15 +35,6 @@ Set_Errors parse_set(char set_command[], Customer *customer)
     case 6:
         puts("we read all the fields !");
         return NO_ERROR;
-    /*
-    case DEBT:
-        puts("we read until debt");
-        return ERR_DEBT;
-    
-    case NO_ERROR:
-        puts("no error ! we read all the fields !");
-        return NO_ERROR;
-    */
     }
 }
 
@@ -256,9 +244,6 @@ void display_set_error_message(Set_Errors set_err)
 
 void validate_fields(Customer *customer, Customer_Fields_Errors * tmp)
 {
-
-    //Customer_Fields_Errors fields_error = {};
-
     tmp->date = validate_Date(customer->date);
     tmp->debt = validate_Debt(customer->debt);
     tmp->id = validate_ID(customer->id);
