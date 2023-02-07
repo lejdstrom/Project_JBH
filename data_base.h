@@ -26,6 +26,7 @@ cmp_func function_dispatcher(Select_request *request);
 int cmp_first_name(Customer *c, Operators op, char *arg);
 int cmp_second_name(Customer *c, Operators op, char *arg);
 int cmp_date(Customer *c, Operators op, char *arg);
+int cmp_date_helper(int d1, int m1, int y1, int d2, int m2, int y2);
 int cmp_id(Customer *c, Operators op, char *arg);
 int cmp_debt(Customer *c, Operators op, char *arg);
 int cmp_phone(Customer *c, Operators op, char *arg);

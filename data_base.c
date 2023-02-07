@@ -135,7 +135,10 @@ Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char p
                 c->id,
                 c->phone_number,
                 c->date,
-                c->debt);
+                // c->debt
+                // we can only update one field each time !
+                v->data[index].debt
+                );
 
             fclose(f);
 
@@ -244,6 +247,15 @@ int cmp_second_name(Customer *c, Operators op, char *arg)
 
 int cmp_date(Customer *c, Operators op, char *arg)
 {
+    int day_c = atoi(c->date);
+    int month_c = atoi(c->date + 3);
+    int year_c = atoi(c->date + 6);
+
+    int day = atoi(arg);
+    int month = atoi(arg + 3);
+    int year = atoi(arg + 6);
+
+
     switch (op)
     {
     case EQUAL:
@@ -253,10 +265,47 @@ int cmp_date(Customer *c, Operators op, char *arg)
         return (strcmp(c->date, arg));
 
     case GREATER:
-        return (strcmp(c->date, arg) > 0);
+        return cmp_date_helper(day_c, month_c, year_c, day, month, year);
+            
 
     case SMALLER:
-        return (strcmp(c->date, arg) < 0);
+        return !cmp_date_helper(day_c, month_c, year_c, day, month, year);
+    }
+}
+
+
+// return 1 if date_1 > date_2
+int cmp_date_helper(int d1, int m1, int y1, int d2, int m2, int y2)
+{
+    if(y1 < y2)
+    {
+        return 0;
+    }
+    else if(y1 > y2)
+    {
+        return 1;
+    }
+    else if(y1 == y2)
+    {
+        if(m1 < m2)
+        {
+            return 0;
+        }
+        else if(m1 > m2)
+        {
+            return 1;
+        }
+        else if(m1 == m2)
+        {
+            if(d1 < d2)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
     }
 }
 
