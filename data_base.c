@@ -104,22 +104,41 @@ void add_customer_to_vector(Vector_customer *v, Customer *c)
 Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char path[])
 {
 
+    // add in hard drive
+    FILE *f = fopen(path, "a+");
+
+    if (!f)
+    {
+        printf("error with reading <%s> file\n", path);
+        return;
+    }
+
     int index = index_of_id(v, c->id);
 
     if (index >= 0) // found in our data base
     {
         // check if fname and sname are the same
-
         if (strcmp(v->data[index].first_name, c->first_name) || strcmp(v->data[index].second_name, c->second_name))
         {
-            // not the same
             return ID_ALREADY_EXIST_WITH_DIFF_NAME;
         }
 
         if (strcmp(v->data[index].phone_number, c->phone_number))
         {
             // update phone number
-            snprintf(v->data[index].phone_number, PHONE_LEN, "%s", c->phone_number);
+            snprintf(v->data[index].phone_number, PHONE_LEN + 1, "%s", c->phone_number);
+
+            // we update the csv file for the next opening
+            fprintf(f, "\n%s,%s,%s,%s,%s,%s",
+                c->first_name,
+                c->second_name,
+                c->id,
+                c->phone_number,
+                c->date,
+                c->debt);
+
+            fclose(f);
+
             return UPDATE_PHONE;
         }
 
@@ -131,20 +150,23 @@ Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char p
         if (result != old_debt)
         {
             snprintf(v->data[index].debt, MAX_DEBT_LEN, "%d", result);
+
+            // we update the csv file for the next opening
+            fprintf(f, "\n%s,%s,%s,%s,%s,%s",
+                c->first_name,
+                c->second_name,
+                c->id,
+                c->phone_number,
+                c->date,
+                c->debt);
+
+            fclose(f);
+
             return UPDATE_DEBT;
         }
     }
     else // not found in db, so we must add it
     {
-
-        // add in hard drive
-        FILE *f = fopen(path, "a");
-
-        if (!f)
-        {
-            printf("error with reading <%s> file\n", path);
-            return;
-        }
 
         fprintf(f, "\n%s,%s,%s,%s,%s,%s",
                 c->first_name,

@@ -59,13 +59,22 @@ void vector_add(Vector_customer *v, Customer * c)
 
     if (index >= 0) // found in our data base
     {
-        // update 
+        // update debt
         int a = atoi(v->data[index].debt);
         int b = atoi(c->debt);
 
         int result = a+b;
 
-        snprintf(v->data[index].debt, MAX_DEBT_LEN, "%d", result);
+        if (result != a)
+        {
+            snprintf(v->data[index].debt, MAX_DEBT_LEN, "%d", result);
+        }
+        
+        // update phone
+        if (strcmp(v->data[index].phone_number, c->phone_number))
+        {
+             snprintf(v->data[index].phone_number, PHONE_LEN + 1, "%s", c->phone_number);
+        }
     }
     else
     {
