@@ -599,3 +599,54 @@ void parse_select(char *arr, Select_request *request)
         request->field = UNKNOW_FIELD;
     }
 }
+
+void merge_sort(Customer *arr, int low, int high)
+{
+    if (low < high)
+    {
+        int mid = (low + high) / 2;
+
+        merge_sort(arr, low, mid);
+        merge_sort(arr, mid + 1, high);
+        merge(arr, low, mid, high);
+    }
+    
+}
+void merge(Customer *arr, int low, int mid, int high)
+{
+    int merged_size = high - low + 1;
+    Customer * temp = malloc(sizeof(Customer) * merged_size);
+    int merge_pos = 0;
+    int left_pos = low;
+    int right_pos = mid + 1;
+
+    while (left_pos <= mid && right_pos <= high)
+    {
+        if(atoi(arr[left_pos].debt) < atoi(arr[right_pos].debt))
+        {
+            temp[merge_pos++] = arr[left_pos++];
+        }
+        else
+        {
+            temp[merge_pos++] = arr[right_pos++];
+        }
+    }
+
+    while (left_pos <= mid)
+    {
+        temp[merge_pos++] = arr[right_pos++];
+    }
+    
+    while (right_pos <= high)
+    {
+        temp[merge_pos++] = arr[left_pos++];
+    }
+
+    for (merge_pos = 0; merge_pos < merged_size; ++merge_pos)
+    {
+        arr[low + merge_pos] = temp[merge_pos];
+    }
+
+    free(temp);
+    
+}

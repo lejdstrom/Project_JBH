@@ -65,6 +65,8 @@ void free_db(Vector_customer *v)
 void print_db(Vector_customer *v)
 {
     // quick_sort(v->data, sizeof(Customer), 0, v->total, cmp_debt_sort);
+
+    //merge_sort(v->data, 0, v->total);
     vector_print(v);
 }
 
