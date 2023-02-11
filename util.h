@@ -108,8 +108,8 @@ void validate_fields(Customer *customer, Customer_Fields_Errors * tmp);
 void quick_sort(void* v, int size, int left, int right, int (*comp)(void*, void*));
 void swap(void* v1, void* v2, int size);
 
-void merge_sort(Customer *arr, int low, int);
-void merge(Customer *arr, int low, int mid, int high);
+//void merge_sort(Customer *arr, int low, int);
+//void merge(Customer *arr, int low, int mid, int high);
 
 void to_lower_str(char *str);
 

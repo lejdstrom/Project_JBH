@@ -600,6 +600,7 @@ void parse_select(char *arr, Select_request *request)
     }
 }
 
+/*
 void merge_sort(Customer *arr, int low, int high)
 {
     if (low < high)
@@ -650,3 +651,4 @@ void merge(Customer *arr, int low, int mid, int high)
     free(temp);
     
 }
+*/
