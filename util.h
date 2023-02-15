@@ -96,7 +96,7 @@ Set_Errors_PHONE validate_Phone(char phone[]);
 
 Set_Errors_DEBT validate_Debt(char debt[]);
 
-void display_fields_error_message(Customer_Fields_Errors * fields_error);
+void display_fields_error_message(Customer_Fields_Errors * fields_error, print_function f, int sock);
 
 void display_set_error_message(Set_Errors set_err, print_function f, int sock);
 

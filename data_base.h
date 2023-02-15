@@ -16,9 +16,9 @@ void answer_request(Vector_customer *data_base, Vector_customer *out, cmp_func, 
 
 void add_customer_to_vector(Vector_customer *v, Customer *c);
 
-Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char path[]);
+Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char path[], print_function f, int sock);
 
-void display_insert_db_message(Set_Insert_Db_Message message, Customer *customer);
+void display_insert_db_message(Set_Insert_Db_Message message, Customer *customer, print_function print_func, int sock);
 
 cmp_func function_dispatcher(Select_request *request);
 

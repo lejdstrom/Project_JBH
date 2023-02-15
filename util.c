@@ -170,7 +170,7 @@ Set_Errors_DEBT validate_Debt(char debt[])
     return DEBT_NO_ERROR;
 }
 
-void display_fields_error_message(Customer_Fields_Errors *fields_error)
+void display_fields_error_message(Customer_Fields_Errors *fields_error, print_function print_func, int sock)
 {
     switch (fields_error->date)
     {
@@ -178,8 +178,7 @@ void display_fields_error_message(Customer_Fields_Errors *fields_error)
         break;
     
     case DATE_BAD_FORMAT:
-        puts("date should be formated : dd/mm/yyyy");
-        puts("of course day month and year should be valid");
+        print_func("date should be formated : dd/mm/yyyy\nof course day month and year should be valid", sock);
         break;
     }
 
@@ -189,11 +188,11 @@ void display_fields_error_message(Customer_Fields_Errors *fields_error)
         break;
     
     case DEBT_IS_NOT_NUMBER:
-        puts("debt should be a number");
+        print_func("debt should be a number", sock);
         break;
 
     case DEBT_BAD_LEN:
-        puts("debt is to long");
+        print_func("debt is to long", sock);
         break;
     }
 
@@ -203,11 +202,11 @@ void display_fields_error_message(Customer_Fields_Errors *fields_error)
         break;
 
     case ID_NOT_NUMBER:
-        puts("id should be a number");
+        print_func("id should be a number", sock);
         break;
 
     case ID_BAD_LEN:
-        puts("id len should be 10");
+        print_func("id len should be 10", sock);
         break;
     }
 
@@ -217,15 +216,15 @@ void display_fields_error_message(Customer_Fields_Errors *fields_error)
         break;
 
     case PHONE_BAD_LEN:
-        puts("phone len should be 10");
+        print_func("phone len should be 10", sock);
         break;
 
     case PHONE_NOT_BEGIN_WITH_ZERO:
-        puts("phone number must start with zero");
+        print_func("phone number must start with zero", sock);
         break;
 
     case PHONE_NOT_NUMBER:
-        puts("phone should be only number");
+        print_func("phone should be only number", sock);
         break;
     }
 }

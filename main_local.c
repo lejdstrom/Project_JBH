@@ -63,7 +63,7 @@ int main(int argc, char **argv)
             parse_select(part, &request);
             if (request.field == UNKNOW_FIELD || request.operator== UNKNOW_OP)
             {
-                puts("problem with your request, try again");
+                print_func_ptr("problem with your request, try again", 0);
                 break;
             }
 
@@ -91,13 +91,13 @@ int main(int argc, char **argv)
                 if (customer_fields_errors.no_error)
                 {
                     // add to data base
-                    set_message = add_customer_to_db(data_base, &customer_tmp, argv[1]);
-                    display_insert_db_message(set_message, &customer_tmp);
+                    set_message = add_customer_to_db(data_base, &customer_tmp, argv[1], print_func_ptr, 0);
+                    display_insert_db_message(set_message, &customer_tmp, print_func_ptr, 0);
                 }
                 else
                 {
                     // display adapted error message
-                    display_fields_error_message(&customer_fields_errors);
+                    display_fields_error_message(&customer_fields_errors, print_func_ptr, 0);
                 }
             }
             // display adapted error message, if parse_set failed

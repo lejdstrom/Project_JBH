@@ -123,15 +123,17 @@ void add_customer_to_vector(Vector_customer *v, Customer *c)
     v->data[v->total++] = *c;
 }
 
-Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char path[])
+Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char path[], print_function print_func, int sock)
 {
 
     // add in hard drive
     FILE *f = fopen(path, "a+");
+    char buffer[MAX_STR_LEN*2];
 
     if (!f)
     {
-        printf("error with reading <%s> file\n", path);
+        sprintf(buffer, "error with reading <%s> file\n", path);
+        print_func(buffer, sock);
         return;
     }
 
@@ -210,24 +212,31 @@ Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char p
     }
 }
 
-void display_insert_db_message(Set_Insert_Db_Message message, Customer *customer)
+void display_insert_db_message(Set_Insert_Db_Message message, Customer *customer, print_function print_func, int sock)
 {
+    char buffer[MAX_STR_LEN*2];
+
     switch (message)
     {
     case ID_ALREADY_EXIST_WITH_DIFF_NAME:
-        printf("the id: %s is already in data base with a different name !\n", customer->id);
+        sprintf(buffer, "the id: %s is already in data base with a different name !\n", customer->id);
+        print_func(buffer, sock);
         return;
 
     case UPDATE_PHONE:
-        printf("the phone of %s %s was updated to: %s\n", customer->first_name, customer->second_name, customer->phone_number);
+        sprintf(buffer, "the phone of %s %s was updated to: %s\n", customer->first_name, customer->second_name, customer->phone_number);
+        print_func(buffer, sock);
         return;
 
     case UPDATE_DEBT:
-        printf("the debt of %s %s was updated\n", customer->first_name, customer->second_name);
+        sprintf(buffer, "the debt of %s %s was updated\n", customer->first_name, customer->second_name);
+        print_func(buffer, sock);
         return;
 
     case NEW_CUSTOMER:
-        printf("new customer ! %s %s was added to db\n", customer->first_name, customer->second_name);
+        sprintf(buffer, "new customer ! %s %s was added to db\n", customer->first_name, customer->second_name);
+        print_func(buffer, sock);
+        return;
     }
 }
 
