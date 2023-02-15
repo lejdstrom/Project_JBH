@@ -105,7 +105,7 @@ int index_of_id(Vector_customer *v, char * id)
     return -1;
 }
 
-void vector_print(Vector_customer *v)
+void vector_print_stdout(Vector_customer *v)
 {
     puts("");
     for (int i = 0; i < v->total; i++)

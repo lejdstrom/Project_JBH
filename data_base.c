@@ -99,7 +99,7 @@ void sort(Vector_customer *vector)
 void print_db(Vector_customer *v)
 {
     sort(v);
-    vector_print(v);
+    vector_print_stdout(v);
 }
 
 void answer_request(Vector_customer *data_base, Vector_customer *out, cmp_func f, Select_request *request)

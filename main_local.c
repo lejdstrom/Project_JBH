@@ -102,7 +102,7 @@ int main(int argc, char **argv)
             // display adapted error message, if parse_set failed
             else
             {
-                display_set_error_message(set_errors);
+                display_set_error_message(set_errors, print_to_stdout, 0);
             }
             break;
 

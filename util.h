@@ -1,11 +1,16 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+#include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
 #include "customer.h"
 
 #define MAX_STR_LEN 50
@@ -51,20 +56,11 @@ typedef enum
     DEBT_IS_NOT_NUMBER, DEBT_BAD_LEN, DEBT_NO_ERROR
 }Set_Errors_DEBT;
 
-
 typedef enum
 {
     NEW_CUSTOMER, UPDATE_PHONE, UPDATE_DEBT, ID_ALREADY_EXIST_WITH_DIFF_NAME
 
 }Set_Insert_Db_Message;
-
-
-typedef struct
-{
-    Set_Errors error;
-    Set_Insert_Db_Message succes;
-}Set_request;
-
 
 typedef struct
 {
@@ -72,8 +68,6 @@ typedef struct
     Operators operator;
     char arg[MAX_STR_LEN];
 }Select_request;
-
-
 
 typedef struct
 {
@@ -85,8 +79,12 @@ typedef struct
 
 }Customer_Fields_Errors;
 
+// if sock == NULL its mean print to stdout
+typedef void (*print_function)(char string[], int sock);
 
+void print_to_stdout(char string[], int sock);
 
+void print_to_client(char string[], int sock);
 
 Set_Errors parse_set(char *set_command, Customer *customer);
 
@@ -100,7 +98,7 @@ Set_Errors_DEBT validate_Debt(char debt[]);
 
 void display_fields_error_message(Customer_Fields_Errors * fields_error);
 
-void display_set_error_message(Set_Errors set_err);
+void display_set_error_message(Set_Errors set_err, print_function f, int sock);
 
 void validate_fields(Customer *customer, Customer_Fields_Errors * tmp);
 

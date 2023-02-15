@@ -38,6 +38,24 @@ Set_Errors parse_set(char set_command[], Customer *customer)
     }
 }
 
+// sock must be set to 0 for stdout
+void print_to_stdout(char string[], int sock)
+{
+    if(!sock)
+        printf("%s\n");
+}
+
+// send string to client connected to sock
+void print_to_client(char string[], int sock)
+{
+    int n;
+
+    if(sock)
+    {               // &string
+        n = send(sock, string, strlen(string), 0);
+    }
+}
+
 Set_Errors_ID validate_ID(char id[])
 {
     int id_len = strlen(id);
@@ -212,32 +230,33 @@ void display_fields_error_message(Customer_Fields_Errors *fields_error)
     }
 }
 
-void display_set_error_message(Set_Errors set_err)
+void display_set_error_message(Set_Errors set_err, print_function print_func, int sock)
 {
+    // function ptr and socket
     switch(set_err)
     {
         case ERR_FAIL_READING:
-            puts("problem with set command: 0 fields were read");
+            print_func("problem with set command: 0 fields were read", sock)
             return;
         
         case ERR_F_NAME:
-            puts("we read only first name");
+            print_func("we read only first name", sock);
             return;
 
         case ERR_S_NAME:
-            puts("we read until second name");
+            print_func("we read until second name", sock);
             return;
 
         case ERR_ID:
-            puts("we read until id");
+            print_func("we read until id", sock);
             return;
         
         case ERR_PHONE:
-            puts("we read until phone");
+            print_func("we read until phone", sock);
             return;
 
         case ERR_DATE:
-            puts("we read until date");
+            print_func("we read until date", sock);
             return;
     }
 }
