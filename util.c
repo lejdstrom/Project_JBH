@@ -322,19 +322,19 @@ MenuChoice parse_first(char *arr)
     }
 }
 
-void set_operator(char *arr, Select_request *request)
+void set_operator(char *arr, Select_request *request, print_function print_func, int sock)
 {
     if (!arr)
     {
-        puts("error you must enter an operator !");
         request->operator= UNKNOW_OP;
+        print_func("error you must enter an operator !", sock);
         return;
     }
 
     if (strlen(arr) > 2)
     {
-        puts("error you must enter a valid operator (>, <, = , !=)");
         request->operator= UNKNOW_OP;
+        print_func("error you must enter a valid operator (>, <, = , !=)", sock);
         return;
     }
 
@@ -356,8 +356,8 @@ void set_operator(char *arr, Select_request *request)
     }
     else
     {
-        puts("unknow operator !");
         request->operator= UNKNOW_OP;
+        print_func("unknow operator !", sock);
     }
 }
 
@@ -393,7 +393,7 @@ void parse_select(char *arr, Select_request *request, print_function print_func,
 
             // must be operator
             part3 = strtok(NULL, " ");
-            set_operator(part3, request);
+            set_operator(part3, request, print_func, sock);
 
             part4 = strtok(NULL, " ");
             if (!part4)
@@ -430,7 +430,7 @@ void parse_select(char *arr, Select_request *request, print_function print_func,
 
             // must be operator
             part3 = strtok(NULL, " ");
-            set_operator(part3, request);
+            set_operator(part3, request, print_func, sock);
 
             part4 = strtok(NULL, " ");
             if (!part4)
@@ -454,7 +454,7 @@ void parse_select(char *arr, Select_request *request, print_function print_func,
         request->field = ID;
 
         part2 = strtok(NULL, " ");
-        set_operator(part2, request);
+        set_operator(part2, request, print_func, sock);
 
         part3 = strtok(NULL, " ");
         if (!part3)
@@ -486,7 +486,7 @@ void parse_select(char *arr, Select_request *request, print_function print_func,
         request->field = PHONE;
 
         part2 = strtok(NULL, " ");
-        set_operator(part2, request);
+        set_operator(part2, request, print_func, sock);
 
         part3 = strtok(NULL, " ");
         if (!part3)
@@ -516,7 +516,7 @@ void parse_select(char *arr, Select_request *request, print_function print_func,
         // here we must check the date format
         request->field = DATE;
         part2 = strtok(NULL, " ");
-        set_operator(part2, request);
+        set_operator(part2, request, print_func, sock);
 
         part3 = strtok(NULL, " ");
         if (!part3)
@@ -539,7 +539,7 @@ void parse_select(char *arr, Select_request *request, print_function print_func,
         request->field = DEBT;
 
         part2 = strtok(NULL, " ");
-        set_operator(part2, request);
+        set_operator(part2, request, print_func, sock);
 
         part3 = strtok(NULL, " ");
         if (!part3)
