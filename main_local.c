@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 
         case SELECT:
             // parse the rest of the string
-            parse_select(part, &request);
+            parse_select(part, &request, print_func_ptr, 0);
             if (request.field == UNKNOW_FIELD || request.operator== UNKNOW_OP)
             {
                 print_func_ptr("problem with your request, try again", 0);

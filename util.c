@@ -361,7 +361,7 @@ void set_operator(char *arr, Select_request *request)
     }
 }
 
-void parse_select(char *arr, Select_request *request)
+void parse_select(char *arr, Select_request *request, print_function print_func, int sock)
 {
     char *part1 = strtok(NULL, " ");
     char *part2 = NULL; // strtok(NULL /*+ strlen(part1)*/, " ");
@@ -370,7 +370,7 @@ void parse_select(char *arr, Select_request *request)
 
     if (!part1)
     {
-        puts("you must enter a field after select");
+        print_func("you must enter a field after select", sock);
         request->field = UNKNOW_FIELD;
         return;
     }
@@ -382,7 +382,7 @@ void parse_select(char *arr, Select_request *request)
         // not sure needed
         if (!part2)
         {
-            puts("error you should insert a space after first !");
+            print_func("error you should insert a space after first !", sock);
             request->field = UNKNOW_FIELD;
             return;
         }
@@ -398,12 +398,12 @@ void parse_select(char *arr, Select_request *request)
             part4 = strtok(NULL, " ");
             if (!part4)
             {
-                puts("you must enter an argument after operator");
+                print_func("you must enter an argument after operator", sock);
                 return;
             }
             if (strlen(part4) > 49)
             {
-                puts("error argument to long !");
+                print_func("error argument to long !", sock);
                 return;
             }
 
@@ -419,7 +419,7 @@ void parse_select(char *arr, Select_request *request)
         // not sure needed
         if (!part2)
         {
-            puts("error you should insert a space after second !");
+            print_func("error you should insert a space after second !", sock);
             request->field = UNKNOW_FIELD;
             return;
         }
@@ -435,12 +435,12 @@ void parse_select(char *arr, Select_request *request)
             part4 = strtok(NULL, " ");
             if (!part4)
             {
-                puts("you must enter an argument after operator");
+                print_func("you must enter an argument after operator", sock);
                 return;
             }
             if (strlen(part4) > 49)
             {
-                puts("error argument to long !");
+                print_func("error argument to long !", sock);
                 return;
             }
 
@@ -459,7 +459,7 @@ void parse_select(char *arr, Select_request *request)
         part3 = strtok(NULL, " ");
         if (!part3)
         {
-            puts("you must enter an argument after operator !");
+            print_func("you must enter an argument after operator !", sock);
             return;
         }
 
@@ -468,13 +468,13 @@ void parse_select(char *arr, Select_request *request)
 
         if (strlen(part3) > 10)
         {
-            puts("error id len must be 10 !");
+            print_func("error id len must be 10 !", sock);
             return;
         }
 
         if (!is_digit_str(part3))
         {
-            puts("error id must be only numbers !");
+            print_func("error id must be only numbers !", sock);
             return;
         }
 
@@ -491,7 +491,7 @@ void parse_select(char *arr, Select_request *request)
         part3 = strtok(NULL, " ");
         if (!part3)
         {
-            puts("you must enter an argument after operator");
+            print_func("you must enter an argument after operator", sock);
             return;
         }
 
@@ -500,12 +500,12 @@ void parse_select(char *arr, Select_request *request)
 
         if (strlen(part3) != 11)
         {
-            puts("error phone number must be 10 numbers !");
+            print_func("error phone number must be 10 numbers !", sock);
             return;
         }
         if (!is_digit_str(part3))
         {
-            puts("error id must be only numbers !");
+            print_func("error id must be only numbers !", sock);
             return;
         }
 
@@ -521,12 +521,12 @@ void parse_select(char *arr, Select_request *request)
         part3 = strtok(NULL, " ");
         if (!part3)
         {
-            puts("you must enter an argument after operator");
+            print_func("you must enter an argument after operator", sock);
             return;
         }
         if (strlen(part3) != 11)
         {
-            puts("error date should be formated: dd/mm/yyyy");
+            print_func("error date should be formated: dd/mm/yyyy", sock);
             return;
         }
 
@@ -544,17 +544,17 @@ void parse_select(char *arr, Select_request *request)
         part3 = strtok(NULL, " ");
         if (!part3)
         {
-            puts("you must enter an argument after operator");
+            print_func("you must enter an argument after operator", sock);
             return;
         }
         if (strlen(part3) > 10)
         {
-            puts("argument to long !");
+            print_func("argument to long !", sock);
             return;
         }
         if (atoi(part3) == 0)
         {
-            puts("error you must enter a valid number");
+            print_func("error you must enter a valid number", sock);
             return;
         }
 
@@ -563,7 +563,7 @@ void parse_select(char *arr, Select_request *request)
     }
     else
     {
-        puts("unknow field !");
+        print_func("unknow field !", sock);
         request->field = UNKNOW_FIELD;
     }
 }

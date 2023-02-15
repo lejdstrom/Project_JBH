@@ -108,7 +108,7 @@ int is_digit_str(const char * str);
 
 MenuChoice parse_first(char * arr);
 
-void parse_select(char *arr, Select_request *request);
+void parse_select(char *arr, Select_request *request, print_function f, int sock);
 
 void set_operator(char *arr, Select_request *request);
 
