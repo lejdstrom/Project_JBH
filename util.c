@@ -39,10 +39,10 @@ Set_Errors parse_set(char set_command[], Customer *customer)
 }
 
 // sock must be set to 0 for stdout
-void print_to_stdout(char string[], int sock)
+void print_to_stdout(char *string, int sock)
 {
     if(!sock)
-        printf("%s\n");
+        printf("%s\n", string);
 }
 
 // send string to client connected to sock
@@ -236,7 +236,7 @@ void display_set_error_message(Set_Errors set_err, print_function print_func, in
     switch(set_err)
     {
         case ERR_FAIL_READING:
-            print_func("problem with set command: 0 fields were read", sock)
+            print_func("problem with set command: 0 fields were read", sock);
             return;
         
         case ERR_F_NAME:

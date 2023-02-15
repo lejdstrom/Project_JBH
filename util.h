@@ -82,7 +82,7 @@ typedef struct
 // if sock == NULL its mean print to stdout
 typedef void (*print_function)(char string[], int sock);
 
-void print_to_stdout(char string[], int sock);
+void print_to_stdout(char *string, int sock);
 
 void print_to_client(char string[], int sock);
 
