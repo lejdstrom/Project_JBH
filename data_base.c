@@ -94,28 +94,12 @@ void sort(Vector_customer *vector)
 }
 
 
-
 // sort vector according to debt field
+// and print
 void print_db(Vector_customer *v)
 {
-    // quick_sort(v->data, sizeof(Customer), 0, v->total, cmp_debt_sort);
-
-    //merge_sort(v->data, 0, v->total);
-
     sort(v);
     vector_print(v);
-}
-
-// c1 and c2 are both customer struct
-int cmp_debt_sort(void *c1, void *c2)
-{
-    Customer *_c1 = (Customer *)c1;
-    Customer *_c2 = (Customer *)c2;
-
-    int debt1 = atoi(_c1->debt);
-    int debt2 = atoi(_c2->debt);
-
-    return debt1 - debt2;
 }
 
 void answer_request(Vector_customer *data_base, Vector_customer *out, cmp_func f, Select_request *request)

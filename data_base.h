@@ -9,7 +9,6 @@
 Vector_customer *init_db(char path[]);
 void free_db(Vector_customer *v);
 void print_db(Vector_customer *v);
-int cmp_debt_sort(void *c1, void *c2);
 
 typedef int (*cmp_func)(Customer *c, Operators op, char *args);
 
