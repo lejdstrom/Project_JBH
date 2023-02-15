@@ -16,8 +16,6 @@ int main(int argc, char **argv)
 
     Vector_customer *data_base = NULL;
     data_base = init_db(argv[1]);
-
-
     if (!data_base)
     {
         printf("error with creating data base from file %s\n", argv[1]);
