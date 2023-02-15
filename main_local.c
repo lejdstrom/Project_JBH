@@ -27,6 +27,7 @@ int main(int argc, char **argv)
     char copy_buffer[BUFFER_SIZE] = {};
     char delimiters[] = {" ,\n"};
     int flag = 1;
+    print_function print_func_ptr = print_to_stdout;
 
     // select request
     Select_request request = {};
@@ -102,7 +103,7 @@ int main(int argc, char **argv)
             // display adapted error message, if parse_set failed
             else
             {
-                display_set_error_message(set_errors, print_to_stdout, 0);
+                display_set_error_message(set_errors, print_func_ptr, 0);
             }
             break;
 
@@ -111,7 +112,7 @@ int main(int argc, char **argv)
             break;
 
         case UNKNOW:
-            puts("error you must choose between one of the 4 options: print, select, set, quit");
+            print_func_ptr("error you must choose between one of the 4 options: print, select, set, quit", 0);
             break;
         }
     }
