@@ -61,12 +61,48 @@ void free_db(Vector_customer *v)
     free(v);
 }
 
+
+
+// bubble sort improved
+// best case O(n)
+void sort(Vector_customer *vector)
+{
+    int len = vector->total;
+    int swap = 0;
+    Customer tmp_customer = {};
+
+    for (int i = 0; i < len; i++)
+    {
+        swap = 0;
+        for (int j = 0; j < len -1; j++)
+        {
+            if (atoi(vector->data[j].debt) > atoi(vector->data[j+1].debt))
+            {
+                tmp_customer = vector->data[j+1];
+                vector->data[j+1] = vector->data[j];
+                vector->data[j] = tmp_customer;
+                
+                swap = 1;
+            }
+            
+        }
+        if(!swap)
+        {
+            break;
+        }
+    }
+}
+
+
+
 // sort vector according to debt field
 void print_db(Vector_customer *v)
 {
     // quick_sort(v->data, sizeof(Customer), 0, v->total, cmp_debt_sort);
 
     //merge_sort(v->data, 0, v->total);
+
+    sort(v);
     vector_print(v);
 }
 

@@ -261,54 +261,6 @@ void validate_fields(Customer *customer, Customer_Fields_Errors * tmp)
     return;
 }
 
-void quick_sort(void *v, int size, int left, int right, int (*comp)(void *, void *))
-{
-    void *vt, *v3;
-    int i, last, mid = (left + right) / 2;
-    if (left >= right)
-        return;
-
-    // casting void* to char* so that operations
-    // can be done.
-    void *vl = (char *)(v + (left * size));
-    void *vr = (char *)(v + (mid * size));
-    swap(vl, vr, size);
-    last = left;
-    for (i = left + 1; i <= right; i++)
-    {
-
-        // vl and vt will have the starting address
-        // of the elements which will be passed to
-        // comp function.
-        vt = (char *)(v + (i * size));
-        if ((*comp)(vl, vt) > 0)
-        {
-            ++last;
-            v3 = (char *)(v + (last * size));
-            swap(vt, v3, size);
-        }
-    }
-
-    v3 = (char *)(v + (last * size));
-    swap(vl, v3, size);
-    quick_sort(v, size, left, last - 1, comp);
-    quick_sort(v, size, last + 1, right, comp);
-}
-
-void swap(void *v1, void *v2, int size)
-{
-    // buffer is array of characters which will
-    // store element byte by byte
-    char buffer[size];
-
-    // memcpy will copy the contents from starting
-    // address of v1 to length of size in buffer
-    // byte by byte.
-    memcpy(buffer, v1, size);
-    memcpy(v1, v2, size);
-    memcpy(v2, buffer, size);
-}
-
 void to_lower_str(char *str)
 {
     for (; *str; ++str)
@@ -351,8 +303,6 @@ MenuChoice parse_first(char *arr)
         return UNKNOW;
     }
 }
-
-
 
 void set_operator(char *arr, Select_request *request)
 {
@@ -599,56 +549,3 @@ void parse_select(char *arr, Select_request *request)
         request->field = UNKNOW_FIELD;
     }
 }
-
-/*
-void merge_sort(Customer *arr, int low, int high)
-{
-    if (low < high)
-    {
-        int mid = (low + high) / 2;
-
-        merge_sort(arr, low, mid);
-        merge_sort(arr, mid + 1, high);
-        merge(arr, low, mid, high);
-    }
-    
-}
-void merge(Customer *arr, int low, int mid, int high)
-{
-    int merged_size = high - low + 1;
-    Customer * temp = malloc(sizeof(Customer) * merged_size);
-    int merge_pos = 0;
-    int left_pos = low;
-    int right_pos = mid + 1;
-
-    while (left_pos <= mid && right_pos <= high)
-    {
-        if(atoi(arr[left_pos].debt) < atoi(arr[right_pos].debt))
-        {
-            temp[merge_pos++] = arr[left_pos++];
-        }
-        else
-        {
-            temp[merge_pos++] = arr[right_pos++];
-        }
-    }
-
-    while (left_pos <= mid)
-    {
-        temp[merge_pos++] = arr[right_pos++];
-    }
-    
-    while (right_pos <= high)
-    {
-        temp[merge_pos++] = arr[left_pos++];
-    }
-
-    for (merge_pos = 0; merge_pos < merged_size; ++merge_pos)
-    {
-        arr[low + merge_pos] = temp[merge_pos];
-    }
-
-    free(temp);
-    
-}
-*/

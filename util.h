@@ -104,25 +104,11 @@ void display_set_error_message(Set_Errors set_err);
 
 void validate_fields(Customer *customer, Customer_Fields_Errors * tmp);
 
-
-void quick_sort(void* v, int size, int left, int right, int (*comp)(void*, void*));
-void swap(void* v1, void* v2, int size);
-
-//void merge_sort(Customer *arr, int low, int);
-//void merge(Customer *arr, int low, int mid, int high);
-
 void to_lower_str(char *str);
 
 int is_digit_str(const char * str);
 
-
 MenuChoice parse_first(char * arr);
-
-//void parse_set(char *arr, Set_request * set_request, Customer *tmp);
-
-void print_set_success_message();
-
-void print_set_error_message();
 
 void parse_select(char *arr, Select_request *request);
 

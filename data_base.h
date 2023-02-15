@@ -23,6 +23,9 @@ void display_insert_db_message(Set_Insert_Db_Message message, Customer *customer
 
 cmp_func function_dispatcher(Select_request *request);
 
+
+void sort(Vector_customer *vector);
+
 int cmp_first_name(Customer *c, Operators op, char *arg);
 int cmp_second_name(Customer *c, Operators op, char *arg);
 int cmp_date(Customer *c, Operators op, char *arg);

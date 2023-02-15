@@ -17,7 +17,6 @@ int main(int argc, char **argv)
     Vector_customer *data_base = NULL;
     data_base = init_db(argv[1]);
 
-    Vector_customer request_answer = {};
 
     if (!data_base)
     {
@@ -34,6 +33,7 @@ int main(int argc, char **argv)
     // select request
     Select_request request = {};
     char *part;
+    Vector_customer request_answer = {};
 
     // set request
     Customer_Fields_Errors customer_fields_errors = {};
@@ -74,7 +74,6 @@ int main(int argc, char **argv)
 
             if (request_answer.total > 0)
             {
-                // quick_sort(&request_answer, 0, request_answer.total, cmp_debt_sort);
                 print_db(&request_answer);
                 vector_free(&request_answer);
             }
