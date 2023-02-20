@@ -35,6 +35,9 @@ Set_Errors parse_set(char set_command[], Customer *customer)
     case 6:
         puts("we read all the fields !");
         return NO_ERROR;
+
+    default:
+        return ERR_FAIL_READING;
     }
 }
 
@@ -218,27 +221,33 @@ void display_set_error_message(Set_Errors set_err)
     {
         case ERR_FAIL_READING:
             puts("problem with set command: 0 fields were read");
-            return;
+            break;;
         
         case ERR_F_NAME:
             puts("we read only first name");
-            return;
+            break;
 
         case ERR_S_NAME:
             puts("we read until second name");
-            return;
+            break;
 
         case ERR_ID:
             puts("we read until id");
-            return;
+            break;
         
         case ERR_PHONE:
             puts("we read until phone");
-            return;
+            break;
 
         case ERR_DATE:
             puts("we read until date");
-            return;
+            break;
+
+        case ERR_DEBT:
+            break;
+
+        case NO_ERROR:
+            break;
     }
 }
 

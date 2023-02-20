@@ -9,6 +9,7 @@
 #include "customer.h"
 
 #define MAX_STR_LEN 50
+#define PROMPT printf("-> ");
 
 typedef enum
 {

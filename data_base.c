@@ -1,6 +1,6 @@
 #include "data_base.h"
 
-Vector_customer *init_db(char path[] /* Vector_customer *v */)
+Vector_customer init_db(char path[])
 {
     FILE *f = fopen(path, "r");
     int line_number = 1;
@@ -8,9 +8,8 @@ Vector_customer *init_db(char path[] /* Vector_customer *v */)
     int records = 0;
     char buffer[BUFFER_SIZE];
 
-    // static vector
-    Vector_customer *v = malloc(sizeof(Vector_customer));
-    vector_init(v);
+    Vector_customer v = {};
+    vector_init(&v);
 
     if (!f)
     {
@@ -38,12 +37,11 @@ Vector_customer *init_db(char path[] /* Vector_customer *v */)
         {
             // add to db
             records++;
-            vector_add(v, &tmp);
+            vector_add(&v, &tmp);
         }
         else
         {
             printf("line %d is bad formated in file: %s\n", line_number, path);
-            // add to error struct
         }
     }
 
@@ -55,7 +53,6 @@ Vector_customer *init_db(char path[] /* Vector_customer *v */)
 void free_db(Vector_customer *v)
 {
     vector_free(v);
-    free(v);
 }
 
 // bubble sort improved
@@ -214,21 +211,23 @@ void display_insert_db_message(Set_Insert_Db_Message message, Customer *customer
     {
     case ID_ALREADY_EXIST_WITH_DIFF_NAME:
         printf("the id: %s is already in data base with a different name !\n", customer->id);
-        return;
+        break;
 
     case UPDATE_PHONE:
         printf("the phone of %s %s was updated to: %s\n", customer->first_name, customer->second_name, customer->phone_number);
-        return;
+        break;
 
     case UPDATE_DEBT:
         printf("the debt of %s %s was updated\n", customer->first_name, customer->second_name);
-        return;
+        break;
 
     case NEW_CUSTOMER:
         printf("new customer ! %s %s was added to db\n", customer->first_name, customer->second_name);
+        break;
 
     case ERROR_WITH_FILE:
         printf("problem with opening file\n");
+        break;
     }
 }
 

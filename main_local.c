@@ -4,8 +4,6 @@
 
 #include "data_base.h"
 
-#define PROMPT printf("-> ");
-
 int main(int argc, char **argv)
 {
     if (argc < 2)
@@ -14,21 +12,15 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    Vector_customer *data_base = NULL;
+    Vector_customer data_base = {};
     data_base = init_db(argv[1]);
 
-
-    if (!data_base)
-    {
-        printf("error with creating data base from file %s\n", argv[1]);
-    }
-
-    print_db(data_base);
+    print_db(&data_base);
 
     char buffer[BUFFER_SIZE] = {};
     char copy_buffer[BUFFER_SIZE] = {};
     char delimiters[] = {" ,\n"};
-    int flag = 1;
+    Boolean flag = TRUE;
 
     // select request
     Select_request request = {};
@@ -56,7 +48,7 @@ int main(int argc, char **argv)
         switch (parse_first(part))
         {
         case PRINT:
-            print_db(data_base);
+            print_db(&data_base);
             break;
 
         case SELECT:
@@ -70,7 +62,7 @@ int main(int argc, char **argv)
 
             vector_init(&request_answer);
 
-            answer_request(data_base, &request_answer, function_dispatcher(&request), &request);
+            answer_request(&data_base, &request_answer, function_dispatcher(&request), &request);
 
             if (request_answer.total > 0)
             {
@@ -92,7 +84,7 @@ int main(int argc, char **argv)
                 if (customer_fields_errors.no_error)
                 {
                     // add to data base
-                    set_message = add_customer_to_db(data_base, &customer_tmp, argv[1]);
+                    set_message = add_customer_to_db(&data_base, &customer_tmp, argv[1]);
                     display_insert_db_message(set_message, &customer_tmp);
                 }
                 else
@@ -109,7 +101,7 @@ int main(int argc, char **argv)
             break;
 
         case QUIT:
-            flag = 0;
+            flag = FALSE;
             break;
 
         case UNKNOW:
@@ -118,7 +110,7 @@ int main(int argc, char **argv)
         }
     }
 
-    free_db(data_base);
+    free_db(&data_base);
 
     return 0;
 }

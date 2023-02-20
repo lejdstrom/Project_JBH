@@ -6,7 +6,7 @@
 
 #define BUFFER_SIZE 256
 
-Vector_customer *init_db(char path[]);
+Vector_customer init_db(char path[]);
 void free_db(Vector_customer *v);
 void print_db(Vector_customer *v);
 
