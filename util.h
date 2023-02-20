@@ -63,13 +63,11 @@ typedef enum
 
 }Set_Insert_Db_Message;
 
-
 typedef struct
 {
     Set_Errors error;
     Set_Insert_Db_Message succes;
 }Set_request;
-
 
 typedef struct
 {
@@ -81,8 +79,6 @@ typedef struct
     char arg[MAX_STR_LEN];
 }Select_request;
 
-
-
 typedef struct
 {
     unsigned int no_error;
@@ -92,8 +88,6 @@ typedef struct
     Errors_PHONE phone;
 
 }Customer_Fields_Errors;
-
-
 
 
 Set_Errors parse_set(char *set_command, Customer *customer);
@@ -121,7 +115,5 @@ MenuChoice parse_first(char * arr);
 void parse_select(char *arr, Select_request *request);
 
 void set_operator(char *arr, Select_request *request);
-
-
 
 #endif

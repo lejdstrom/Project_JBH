@@ -2,7 +2,6 @@
 
 Vector_customer *init_db(char path[] /* Vector_customer *v */)
 {
-
     FILE *f = fopen(path, "r");
     int line_number = 1;
     int read = 0;
@@ -37,8 +36,6 @@ Vector_customer *init_db(char path[] /* Vector_customer *v */)
 
         if (read == 6)
         {
-            // check if tmp.id already in db
-            // if true then update customer.debt
             // add to db
             records++;
             vector_add(v, &tmp);
@@ -60,8 +57,6 @@ void free_db(Vector_customer *v)
     vector_free(v);
     free(v);
 }
-
-
 
 // bubble sort improved
 // best case O(n)
@@ -92,7 +87,6 @@ void sort(Vector_customer *vector)
         }
     }
 }
-
 
 // sort vector according to debt field
 // and print
@@ -208,6 +202,10 @@ Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char p
 
         return NEW_CUSTOMER;
     }
+
+    // gcc -Wall warning :"control reaches end of non void function"
+    // should not be reached
+    return NO_ERROR;
 }
 
 void display_insert_db_message(Set_Insert_Db_Message message, Customer *customer)
@@ -255,57 +253,10 @@ int cmp_date(Customer *c, Operators op, char *arg)
     int month = atoi(arg + 3);
     int year = atoi(arg + 6);
 
+    int date1 = day_c + month_c * 30 + year_c * 360;
+    int date2 = day + month * 30 + year * 360;
 
-    switch (op)
-    {
-    case EQUAL:
-        return (!strcmp(c->date, arg));
-
-    case NOT_EQUAL:
-        return (strcmp(c->date, arg));
-
-    case GREATER:
-        return cmp_date_helper(day_c, month_c, year_c, day, month, year);
-            
-
-    case SMALLER:
-        return !cmp_date_helper(day_c, month_c, year_c, day, month, year);
-    }
-}
-
-// return 1 if date_1 > date_2
-int cmp_date_helper(int d1, int m1, int y1, int d2, int m2, int y2)
-{
-    if(y1 < y2)
-    {
-        return 0;
-    }
-    else if(y1 > y2)
-    {
-        return 1;
-    }
-    else if(y1 == y2)
-    {
-        if(m1 < m2)
-        {
-            return 0;
-        }
-        else if(m1 > m2)
-        {
-            return 1;
-        }
-        else if(m1 == m2)
-        {
-            if(d1 < d2)
-            {
-                return 0;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-    }
+    return cmp_number(date1, date2, op);
 }
 
 int cmp_id(Customer *c, Operators op, char *arg)
@@ -318,20 +269,7 @@ int cmp_debt(Customer *c, Operators op, char *arg)
     int c_debt = atoi(c->debt);
     int arg_debt = atoi(arg);
 
-    switch (op)
-    {
-    case EQUAL:
-        return (c_debt == arg_debt);
-
-    case NOT_EQUAL:
-        return (c_debt != arg_debt);
-
-    case GREATER:
-        return (c_debt > arg_debt);
-
-    case SMALLER:
-        return (c_debt < arg_debt);
-    }
+    return cmp_number(c_debt, arg_debt, op);
 }
 
 int cmp_phone(Customer *c, Operators op, char *arg)
@@ -355,13 +293,36 @@ int cmp_string(char *str1, char *str2, Operators operator)
     case SMALLER:
         return (strcmp(str1, str2) < 0);
 
-    // case default:
-    //    return ?
+    case UNKNOW_OP:
+        return UNKNOW_OP;
 
+    default:
+        return NO_ERROR;
     }
+}
 
+int cmp_number(int num1, int num2, Operators operator)
+{
+    switch (operator)
+    {
+    case EQUAL:
+        return (num1 == num2);
 
-    return 0;
+    case NOT_EQUAL:
+        return (num1 != num2);
+
+    case GREATER:
+        return (num1 > num2);
+            
+    case SMALLER:
+        return (num1 < num2);
+    
+    case UNKNOW_OP:
+        return UNKNOW_OP;
+
+    default:
+        return NO_ERROR;
+    }
 }
 
 cmp_func function_dispatcher(Select_request *request)
@@ -385,5 +346,11 @@ cmp_func function_dispatcher(Select_request *request)
 
     case DATE:
         return cmp_date;
+
+    case UNKNOW_FIELD:
+        return NULL;
+
+    default:
+        return NULL;
     }
 }

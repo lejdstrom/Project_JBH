@@ -4,7 +4,7 @@
 
 #include "data_base.h"
 
-#define PROMPT printf("\n-> ");
+#define PROMPT printf("-> ");
 
 int main(int argc, char **argv)
 {

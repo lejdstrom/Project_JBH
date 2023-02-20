@@ -28,18 +28,10 @@ void sort(Vector_customer *vector);
 int cmp_first_name(Customer *c, Operators op, char *arg);
 int cmp_second_name(Customer *c, Operators op, char *arg);
 int cmp_date(Customer *c, Operators op, char *arg);
-int cmp_date_helper(int d1, int m1, int y1, int d2, int m2, int y2);
 int cmp_id(Customer *c, Operators op, char *arg);
 int cmp_debt(Customer *c, Operators op, char *arg);
 int cmp_phone(Customer *c, Operators op, char *arg);
-
-// Refactor_1
-
-// return 1 if str1 == str2, and if str1 >= str2
-// return 0 if str1 != str2, anf if str1 <= str2
 int cmp_string(char *str1, char *str2, Operators operator);
-
-// End Refactor_1
-
+int cmp_number(int num1, int num2, Operators operator);
 
 #endif
