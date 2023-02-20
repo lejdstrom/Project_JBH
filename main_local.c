@@ -12,8 +12,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    Vector_customer data_base = {};
-    data_base = init_db(argv[1]);
+    Vector_customer data_base = init_db(argv[1]);
 
     print_db(&data_base);
 
