@@ -1,6 +1,6 @@
 #include "data_base.h"
 
-Vector_customer *init_db(char path[])
+Vector_customer *init_db(char path[] /* Vector_customer *v */)
 {
 
     FILE *f = fopen(path, "r");
@@ -9,7 +9,7 @@ Vector_customer *init_db(char path[])
     int records = 0;
     char buffer[BUFFER_SIZE];
 
-    // test vector customer
+    // static vector
     Vector_customer *v = malloc(sizeof(Vector_customer));
     vector_init(v);
 
@@ -132,7 +132,7 @@ Set_Insert_Db_Message add_customer_to_db(Vector_customer *v, Customer *c, char p
     if (!f)
     {
         printf("error with reading <%s> file\n", path);
-        return;
+        return ERROR_WITH_FILE;
     }
 
     int index = index_of_id(v, c->id);
@@ -228,43 +228,21 @@ void display_insert_db_message(Set_Insert_Db_Message message, Customer *customer
 
     case NEW_CUSTOMER:
         printf("new customer ! %s %s was added to db\n", customer->first_name, customer->second_name);
+
+    case ERROR_WITH_FILE:
+        printf("problem with opening file\n");
     }
 }
 
+// char *string
 int cmp_first_name(Customer *c, Operators op, char *arg)
 {
-    switch (op)
-    {
-    case EQUAL:
-        return (!strcmp(c->first_name, arg));
-
-    case NOT_EQUAL:
-        return (strcmp(c->first_name, arg));
-
-    case GREATER:
-        return (strcmp(c->first_name, arg) > 0);
-
-    case SMALLER:
-        return (strcmp(c->first_name, arg) < 0);
-    }
+   return cmp_string(c->first_name, arg, op);
 }
 
 int cmp_second_name(Customer *c, Operators op, char *arg)
 {
-    switch (op)
-    {
-    case EQUAL:
-        return (!strcmp(c->second_name, arg));
-
-    case NOT_EQUAL:
-        return (strcmp(c->second_name, arg));
-
-    case GREATER:
-        return (strcmp(c->second_name, arg) > 0);
-
-    case SMALLER:
-        return (strcmp(c->second_name, arg) < 0);
-    }
+    return cmp_string(c->second_name, arg, op);
 }
 
 int cmp_date(Customer *c, Operators op, char *arg)
@@ -294,7 +272,6 @@ int cmp_date(Customer *c, Operators op, char *arg)
         return !cmp_date_helper(day_c, month_c, year_c, day, month, year);
     }
 }
-
 
 // return 1 if date_1 > date_2
 int cmp_date_helper(int d1, int m1, int y1, int d2, int m2, int y2)
@@ -333,20 +310,7 @@ int cmp_date_helper(int d1, int m1, int y1, int d2, int m2, int y2)
 
 int cmp_id(Customer *c, Operators op, char *arg)
 {
-    switch (op)
-    {
-    case EQUAL:
-        return (!strncmp(c->id, arg, 9));
-
-    case NOT_EQUAL:
-        return (strncmp(c->id, arg, 9));
-
-    case GREATER:
-        return (strncmp(c->id, arg, 9) > 0);
-
-    case SMALLER:
-        return (strncmp(c->id, arg, 9) < 0);
-    }
+    return cmp_string(c->id, arg, op);
 }
 
 int cmp_debt(Customer *c, Operators op, char *arg)
@@ -372,20 +336,32 @@ int cmp_debt(Customer *c, Operators op, char *arg)
 
 int cmp_phone(Customer *c, Operators op, char *arg)
 {
-    switch (op)
+    return cmp_string(c->phone_number, arg, op);
+}
+
+int cmp_string(char *str1, char *str2, Operators operator)
+{
+    switch (operator)
     {
     case EQUAL:
-        return !strncmp(c->phone_number, arg, 10);
+        return (!strcmp(str1, str2));
 
     case NOT_EQUAL:
-        return strncmp(c->phone_number, arg, 10);
+        return (strcmp(str1, str2));
 
-    case GREATER:
-        return (strncmp(c->phone_number, arg, 10) > 0);
+    case GREATER:   
+        return (strcmp(str1, str2) > 0);
 
     case SMALLER:
-        return (strncmp(c->phone_number, arg, 10) < 0);
+        return (strcmp(str1, str2) < 0);
+
+    // case default:
+    //    return ?
+
     }
+
+
+    return 0;
 }
 
 cmp_func function_dispatcher(Select_request *request)

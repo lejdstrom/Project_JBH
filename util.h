@@ -12,6 +12,11 @@
 
 typedef enum
 {
+    FALSE, TRUE
+}Boolean;
+
+typedef enum
+{
     PRINT, SELECT, QUIT, SET, UNKNOW
 }MenuChoice;
 
@@ -34,27 +39,27 @@ typedef enum
 typedef enum
 {
     ID_BAD_LEN, ID_NOT_NUMBER, ID_NO_ERROR
-}Set_Errors_ID;
+}Errors_ID;
 
 typedef enum
 {
     PHONE_BAD_LEN, PHONE_NOT_NUMBER, PHONE_NOT_BEGIN_WITH_ZERO, PHONE_NO_ERROR
-}Set_Errors_PHONE;
+}Errors_PHONE;
 
 typedef enum
 {
     DATE_BAD_FORMAT, DATE_NO_ERROR
-}Set_Errors_DATE;
+}Errors_DATE;
 
 typedef enum
 {
     DEBT_IS_NOT_NUMBER, DEBT_BAD_LEN, DEBT_NO_ERROR
-}Set_Errors_DEBT;
+}Errors_DEBT;
 
 
 typedef enum
 {
-    NEW_CUSTOMER, UPDATE_PHONE, UPDATE_DEBT, ID_ALREADY_EXIST_WITH_DIFF_NAME
+    NEW_CUSTOMER, UPDATE_PHONE, UPDATE_DEBT, ID_ALREADY_EXIST_WITH_DIFF_NAME, ERROR_WITH_FILE
 
 }Set_Insert_Db_Message;
 
@@ -70,6 +75,9 @@ typedef struct
 {
     Fields field;
     Operators operator;
+    // Refactor
+    Boolean error_with_args;
+    // End refactor
     char arg[MAX_STR_LEN];
 }Select_request;
 
@@ -78,10 +86,10 @@ typedef struct
 typedef struct
 {
     unsigned int no_error;
-    Set_Errors_DATE date;
-    Set_Errors_DEBT debt;
-    Set_Errors_ID id;
-    Set_Errors_PHONE phone;
+    Errors_DATE date;
+    Errors_DEBT debt;
+    Errors_ID id;
+    Errors_PHONE phone;
 
 }Customer_Fields_Errors;
 
@@ -90,13 +98,13 @@ typedef struct
 
 Set_Errors parse_set(char *set_command, Customer *customer);
 
-Set_Errors_ID validate_ID(char id[]);
+Errors_ID validate_ID(char id[]);
 
-Set_Errors_DATE validate_Date(char date[]);
+Errors_DATE validate_Date(char date[]);
 
-Set_Errors_PHONE validate_Phone(char phone[]);
+Errors_PHONE validate_Phone(char phone[]);
 
-Set_Errors_DEBT validate_Debt(char debt[]);
+Errors_DEBT validate_Debt(char debt[]);
 
 void display_fields_error_message(Customer_Fields_Errors * fields_error);
 

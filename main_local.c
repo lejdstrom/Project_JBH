@@ -4,7 +4,7 @@
 
 #include "data_base.h"
 
-#define PROMPT printf("-> ");
+#define PROMPT printf("\n-> ");
 
 int main(int argc, char **argv)
 {
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
         case SELECT:
             // parse the rest of the string
             parse_select(part, &request);
-            if (request.field == UNKNOW_FIELD || request.operator== UNKNOW_OP)
+            if (request.field == UNKNOW_FIELD || request.operator== UNKNOW_OP || request.error_with_args)
             {
                 puts("problem with your request, try again");
                 break;

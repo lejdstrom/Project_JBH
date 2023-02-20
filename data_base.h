@@ -33,4 +33,13 @@ int cmp_id(Customer *c, Operators op, char *arg);
 int cmp_debt(Customer *c, Operators op, char *arg);
 int cmp_phone(Customer *c, Operators op, char *arg);
 
+// Refactor_1
+
+// return 1 if str1 == str2, and if str1 >= str2
+// return 0 if str1 != str2, anf if str1 <= str2
+int cmp_string(char *str1, char *str2, Operators operator);
+
+// End Refactor_1
+
+
 #endif

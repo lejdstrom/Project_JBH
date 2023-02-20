@@ -38,7 +38,7 @@ Set_Errors parse_set(char set_command[], Customer *customer)
     }
 }
 
-Set_Errors_ID validate_ID(char id[])
+Errors_ID validate_ID(char id[])
 {
     int id_len = strlen(id);
 
@@ -58,7 +58,7 @@ Set_Errors_ID validate_ID(char id[])
 
 }
 
-Set_Errors_DATE validate_Date(char date[])
+Errors_DATE validate_Date(char date[])
 {
 
     int date_len = strlen(date);
@@ -99,7 +99,7 @@ Set_Errors_DATE validate_Date(char date[])
     }
 }
 
-Set_Errors_PHONE validate_Phone(char phone[])
+Errors_PHONE validate_Phone(char phone[])
 {
     int phone_len = strlen(phone);
 
@@ -123,7 +123,7 @@ Set_Errors_PHONE validate_Phone(char phone[])
     return PHONE_NO_ERROR;
 }
 
-Set_Errors_DEBT validate_Debt(char debt[])
+Errors_DEBT validate_Debt(char debt[])
 {
     int debt_len = strlen(debt);
 
@@ -350,6 +350,8 @@ void parse_select(char *arr, Select_request *request)
     char *part3 = NULL;
     char *part4 = NULL;
 
+    request->error_with_args = FALSE;
+
     if (!part1)
     {
         puts("you must enter a field after select");
@@ -377,21 +379,27 @@ void parse_select(char *arr, Select_request *request)
             part3 = strtok(NULL, " ");
             set_operator(part3, request);
 
+            // must be argument
             part4 = strtok(NULL, " ");
             if (!part4)
             {
                 puts("you must enter an argument after operator");
-                return;
+                //Refactor
+                goto error_with_args;
+                //end Refactor
             }
             if (strlen(part4) > 49)
             {
-                puts("error argument to long !");
-                return;
+                puts("error argument to long !");               
+                //Refactor
+                goto error_with_args;
+                //end Refactor
             }
 
             part4[strlen(part4) - 1] = 0;
 
             strcpy(request->arg, part4);
+            return;
         }
     }
     else if (!strncmp(part1, "second", 5))
@@ -414,20 +422,26 @@ void parse_select(char *arr, Select_request *request)
             part3 = strtok(NULL, " ");
             set_operator(part3, request);
 
+            // must be argument
             part4 = strtok(NULL, " ");
             if (!part4)
             {
                 puts("you must enter an argument after operator");
-                return;
+                //Refactor
+                goto error_with_args;
+                //end Refactor
             }
             if (strlen(part4) > 49)
             {
                 puts("error argument to long !");
-                return;
+                //Refactor
+                goto error_with_args;
+                //end Refactor
             }
 
             part4[strlen(part4) - 1] = 0;
             strcpy(request->arg, part4);
+            return;
         }
     }
     else if (!strncmp(part1, "id", 2))
@@ -451,16 +465,21 @@ void parse_select(char *arr, Select_request *request)
         if (strlen(part3) > 10)
         {
             puts("error id len must be 10 !");
-            return;
+            //Refactor
+            goto error_with_args;
+            //end Refactor
         }
 
         if (!is_digit_str(part3))
         {
             puts("error id must be only numbers !");
-            return;
+            //Refactor
+            goto error_with_args;
+            //end Refactor
         }
 
         strcpy(request->arg, part3);
+        return;
     }
     else if (!strncmp(part1, "phone", 5))
     {
@@ -474,24 +493,31 @@ void parse_select(char *arr, Select_request *request)
         if (!part3)
         {
             puts("you must enter an argument after operator");
-            return;
+            //Refactor
+            goto error_with_args;
+            //end Refactor
         }
 
         // remove new line character
         part3[strlen(part3) - 1] = 0;
 
-        if (strlen(part3) != 11)
+        if (strlen(part3) != 10)
         {
             puts("error phone number must be 10 numbers !");
-            return;
+            //Refactor
+            goto error_with_args;
+            //end Refactor
         }
         if (!is_digit_str(part3))
         {
             puts("error id must be only numbers !");
-            return;
+            //Refactor
+            goto error_with_args;
+            //end Refactor
         }
 
         strcpy(request->arg, part3);
+        return;
     }
     else if (!strncmp(part1, "date", 4))
     {
@@ -509,11 +535,15 @@ void parse_select(char *arr, Select_request *request)
         if (strlen(part3) != 11)
         {
             puts("error date should be formated: dd/mm/yyyy");
-            return;
+            //Refactor
+            goto error_with_args;
+            //end Refactor
         }
 
         part3[strlen(part3) - 1] = 0;
         strcpy(request->arg, part3);
+        return;
+
     }
     else if (!strncmp(part1, "debt", 4))
     {
@@ -532,20 +562,29 @@ void parse_select(char *arr, Select_request *request)
         if (strlen(part3) > 10)
         {
             puts("argument to long !");
-            return;
+            //Refactor
+            goto error_with_args;
+            //end Refactor
         }
         if (atoi(part3) == 0)
         {
             puts("error you must enter a valid number");
-            return;
+            //Refactor
+            goto error_with_args;
+            //end Refactor
         }
 
         part3[strlen(part3) - 1] = 0;
         strcpy(request->arg, part3);
+        return;
     }
     else
     {
         puts("unknow field !");
         request->field = UNKNOW_FIELD;
     }
+
+error_with_args:
+    request->error_with_args = TRUE;
+    return;
 }

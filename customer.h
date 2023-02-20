@@ -18,11 +18,13 @@ typedef struct
     //unsigned day,month,year; // Date field
     char date[DATE_LEN +1]; // dd/mm/yyyy
 
-    char debt[MAX_DEBT_LEN]; // char to avoid bad input like: 100mklfas
+    char debt[MAX_DEBT_LEN + 1]; // char to avoid bad input like: 100mklfas
 } Customer;
 
 
 void print_customer(Customer *c);
 
+
+void customer_to_string(Customer *c, char *arr);
 
 #endif
