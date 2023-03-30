@@ -231,7 +231,6 @@ void display_insert_db_message(Set_Insert_Db_Message message, Customer *customer
     }
 }
 
-// char *string
 int cmp_first_name(Customer *c, Operators op, char *arg)
 {
    return cmp_string(c->first_name, arg, op);
@@ -240,6 +239,19 @@ int cmp_first_name(Customer *c, Operators op, char *arg)
 int cmp_second_name(Customer *c, Operators op, char *arg)
 {
     return cmp_string(c->second_name, arg, op);
+}
+
+int cmp_id(Customer *c, Operators op, char *arg)
+{
+    return cmp_string(c->id, arg, op);
+}
+
+int cmp_debt(Customer *c, Operators op, char *arg)
+{
+    int c_debt = atoi(c->debt);
+    int arg_debt = atoi(arg);
+
+    return cmp_number(c_debt, arg_debt, op);
 }
 
 int cmp_date(Customer *c, Operators op, char *arg)
@@ -256,19 +268,6 @@ int cmp_date(Customer *c, Operators op, char *arg)
     int date2 = day + month * 30 + year * 360;
 
     return cmp_number(date1, date2, op);
-}
-
-int cmp_id(Customer *c, Operators op, char *arg)
-{
-    return cmp_string(c->id, arg, op);
-}
-
-int cmp_debt(Customer *c, Operators op, char *arg)
-{
-    int c_debt = atoi(c->debt);
-    int arg_debt = atoi(arg);
-
-    return cmp_number(c_debt, arg_debt, op);
 }
 
 int cmp_phone(Customer *c, Operators op, char *arg)
